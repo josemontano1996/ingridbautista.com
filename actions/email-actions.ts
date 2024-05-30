@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { Resend } from 'resend';
 import { IActionResponse } from '@/shared/interfaces/IActionResponses';
-import { contactFormSchema } from '@/lib/schemas/contactFormSchema';
+import { contactFormSchema } from '@/shared/lib/schemas/contactFormSchema';
 
 export const sendEmailAction = async (
   values: z.infer<typeof contactFormSchema>,

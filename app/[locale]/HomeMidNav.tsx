@@ -1,5 +1,5 @@
-import { SmoothScrollLink } from '@/components/custom/SmoothScrollLink';
-import LocaleLink from '@/components/custom/LocaleLink';
+import { SmoothScrollLink } from '@/presentation/components/custom/SmoothScrollLink';
+import LocaleLink from '@/presentation/components/custom/LocaleLink';
 
 /**
  * The mid navbar component for the home page.

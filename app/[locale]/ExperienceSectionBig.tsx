@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 import Image from 'next/image';
-import { buttonVariants } from '@/components/ui/button';
-import LocaleLink from '@/components/custom/LocaleLink';
+import { buttonVariants } from '@/presentation/components/ui/button';
+import LocaleLink from '@/presentation/components/custom/LocaleLink';
 
 export const ExperiencesSectionBig: FC = () => {
   return (

@@ -4,13 +4,13 @@ import { dir } from 'i18next';
 
 import i18nConfig from '@/i18nConfig';
 import '../globals.css';
-import { Footer } from '@/components/custom/Footer';
-import { cn } from '@/lib/utils';
+import { Footer } from '@/presentation/components/custom/Footer';
+import { cn } from '@/shared/lib/utils';
 
-import AuthProvider from '@/components/providers/SessionProvider';
-import AppStatusDialog from '@/components/custom/AppStatusDialog';
-import TranslationsProvider from '@/components/providers/TranslationsProvider';
-import initTranslations from '@/lib/i18n';
+import AuthProvider from '@/presentation/components/providers/SessionProvider';
+import AppStatusDialog from '@/presentation/components/custom/AppStatusDialog';
+import TranslationsProvider from '@/presentation/components/ui/providers/TranslationsProvider';
+import initTranslations from '@/shared/lib/i18n';
 import { Suspense } from 'react';
 
 const cormorant = Cormorant({ subsets: ['latin'] });

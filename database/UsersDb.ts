@@ -1,7 +1,8 @@
 import bcrypt from 'bcryptjs';
-import User from '@/models/User';
-import { dbConnect, dbDisconnect } from './db';
+
 import { IAuthUser } from '@/shared/interfaces/IAuthUser';
+import User from '@/infrastructure/persistence/models/User';
+import { connectDB } from '@/infrastructure/persistence/database-config';
 
 export const loginUser = async (
   email: string,
@@ -12,7 +13,7 @@ export const loginUser = async (
   }
 
   try {
-    await dbConnect();
+    await connectDB();
 
     const user = await User.findOne({ email });
 
@@ -34,11 +35,8 @@ export const loginUser = async (
   } catch (error) {
     console.log('Error during login', error);
     return null;
-  } finally {
-    await dbDisconnect();
   }
-};
-
+}
 /* 
 export const registerUser = async ({
   email,

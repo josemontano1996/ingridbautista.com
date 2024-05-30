@@ -6,10 +6,10 @@ import { IUserActionResponse } from '@/shared/interfaces/IActionResponses';
 import {
   updatePasswordFormSchema,
   userFormSchema,
-} from '@/lib/schemas/userFormSchema';
+} from '@/shared/lib/schemas/userFormSchema';
 import { IUser } from '@/shared/interfaces/IUser';
 import { dbConnect, dbDisconnect } from '@/database/db';
-import { getAuthSession } from '@/lib/auth/getAuthSession';
+import { getAuthSession } from '@/shared/lib/auth/getAuthSession';
 import User from '@/models/User';
 
 export const updateUserAction = async (

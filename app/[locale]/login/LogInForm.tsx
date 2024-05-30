@@ -12,10 +12,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
-import { FormButton } from '../../../components/custom/FormButton';
+} from '@/presentation/components/ui/form';
+import { Input } from '@/presentation/components/ui/input';
+import { cn } from '@/shared/lib/utils';
+import { FormButton } from '../../../presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 
 const formSchema = z.object({

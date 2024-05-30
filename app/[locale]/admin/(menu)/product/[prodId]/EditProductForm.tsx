@@ -12,27 +12,27 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from '@/presentation/components/ui/form';
+import { Input } from '@/presentation/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
+} from '@/presentation/components/ui/select';
+import { Textarea } from '@/presentation/components/ui/textarea';
+import { Checkbox } from '@/presentation/components/ui/checkbox';
 
 import { allergensArray } from '@/consts/allergens';
 import { capitalize } from '@/shared/utils/capitalize';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import { FormButton } from '@/components/custom/FormButton';
+import { FormButton } from '@/presentation/components/custom/FormButton';
 import { updateProductAction } from '@/actions/product-actions';
 import { imageToBase64String } from '@/shared/utils/imageToBase64String';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { IDbProduct } from '@/shared/interfaces/IDbProduct';
-import { updateProductFormSchema } from '@/lib/schemas/productFormSchemas';
+import { updateProductFormSchema } from '@/shared/lib/schemas/productFormSchemas';
 import { useParams, useRouter } from 'next/navigation';
 import { isFile } from '@/shared/utils/isFile';
 

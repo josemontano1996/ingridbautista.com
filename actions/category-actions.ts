@@ -5,7 +5,7 @@ import { dbConnect, dbDisconnect } from '@/database/db';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 import ProductCategory from '@/models/ProductCategory';
 import { ICategoryActionResponse } from '@/shared/interfaces/IActionResponses';
-import { categoryFormSchema } from '@/lib/schemas/categoryFormSchema';
+import { categoryFormSchema } from '@/shared/lib/schemas/categoryFormSchema';
 import { revalidatePath } from 'next/cache';
 
 export const createCategoryAction = async (

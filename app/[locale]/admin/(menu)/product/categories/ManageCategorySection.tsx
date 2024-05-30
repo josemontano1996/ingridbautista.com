@@ -1,7 +1,7 @@
 'use client';
 
-import { buttonVariants } from '@/components/ui/button';
-import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { buttonVariants } from '@/presentation/components/ui/button';
+import { Dialog, DialogTrigger } from '@/presentation/components/ui/dialog';
 import {
   Table,
   TableBody,
@@ -9,12 +9,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '@/presentation/components/ui/table';
 
 import useStore from '@/presentation/state-management/useStore';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { EditCategoryForm } from './EditCategoryForm';
-import { cn } from '../../../../../../lib/utils';
+import { cn } from '../../../../../../shared/lib/utils';
 import { DeleteCategory } from './DeleteCategory';
 
 export const ManageCategorySection = () => {

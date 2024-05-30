@@ -2,9 +2,9 @@
 
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { FormButton } from '@/components/custom/FormButton';
-import { Form } from '@/components/ui/form';
-import { TableCell } from '@/components/ui/table';
+import { FormButton } from '@/presentation/components/custom/FormButton';
+import { Form } from '@/presentation/components/ui/form';
+import { TableCell } from '@/presentation/components/ui/table';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 

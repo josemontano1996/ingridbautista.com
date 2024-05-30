@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import { SmoothScrollLink } from '@/components/custom/SmoothScrollLink';
-import LocaleLink from '@/components/custom/LocaleLink';
-import MaxWidthWrapper from '@/components/custom/wrappers/MaxWidthWrapper';
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { SmoothScrollLink } from '@/presentation/components/custom/SmoothScrollLink';
+import LocaleLink from '@/presentation/components/custom/LocaleLink';
+import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
+import { buttonVariants } from '@/presentation/components/ui/button';
+import { cn } from '@/shared/lib/utils';
 
 const HeroSection = () => {
   return (

@@ -12,22 +12,22 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from '@/presentation/components/ui/form';
+import { Input } from '@/presentation/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { createProductFormSchema } from '@/lib/schemas/productFormSchemas';
+} from '@/presentation/components/ui/select';
+import { Textarea } from '@/presentation/components/ui/textarea';
+import { Checkbox } from '@/presentation/components/ui/checkbox';
+import { createProductFormSchema } from '@/shared/lib/schemas/productFormSchemas';
 import { allergensArray } from '@/consts/allergens';
 import { capitalize } from '@/shared/utils/capitalize';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import { FormButton } from '@/components/custom/FormButton';
+import { FormButton } from '@/presentation/components/custom/FormButton';
 import { createProductAction } from '@/actions/product-actions';
 import { imageToBase64String } from '@/shared/utils/imageToBase64String';
 

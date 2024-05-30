@@ -10,11 +10,11 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { FormButton } from '@/components/custom/FormButton';
+} from '@/presentation/components/ui/form';
+import { Input } from '@/presentation/components/ui/input';
+import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
-import { userFormSchema } from '@/lib/schemas/userFormSchema';
+import { userFormSchema } from '@/shared/lib/schemas/userFormSchema';
 import { updateUserAction } from '@/actions/user-actions';
 import { IUser } from '@/shared/interfaces/IUser';
 

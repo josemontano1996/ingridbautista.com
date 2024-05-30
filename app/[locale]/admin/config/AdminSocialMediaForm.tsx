@@ -11,12 +11,12 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { FormButton } from '@/components/custom/FormButton';
+} from '@/presentation/components/ui/form';
+import { Input } from '@/presentation/components/ui/input';
+import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { ISocialData } from '@/shared/interfaces/ISocialData';
-import { socialMediaSchema } from '@/lib/schemas/socialMediaSchema';
+import { socialMediaSchema } from '@/shared/lib/schemas/socialMediaSchema';
 import { updateSocialMediaAction } from '@/actions/social-media-actions';
 
 interface Props {

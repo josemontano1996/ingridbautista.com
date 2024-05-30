@@ -7,12 +7,12 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+} from '@/presentation/components/ui/card';
+import { cn } from '@/shared/lib/utils';
 import { truncateString } from '@/shared/utils/truncateString';
 import { FooterMenuCard } from './FooterMenuCard';
 import { capitalize } from '@/shared/utils/capitalize';
-import CardImage from '@/components/custom/CardImage';
+import CardImage from '@/presentation/components/custom/CardImage';
 import { TLocales } from '@/shared/types/TLocales';
 
 export const AdminMenuItemCard = ({

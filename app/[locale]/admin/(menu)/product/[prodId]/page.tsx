@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 import { dbConnect, dbDisconnect } from '@/database/db';
 import EditProductForm from '@/app/[locale]/admin/(menu)/product/[prodId]/EditProductForm';
-import MaxWidthWrapper from '@/components/custom/wrappers/MaxWidthWrapper';
+import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 import Product from '@/models/Product';
 import ProductCategory from '@/models/ProductCategory';

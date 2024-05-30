@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/presentation/components/ui/button';
+import { cn } from '@/shared/lib/utils';
 
 const ChefSection = () => {
   return (
@@ -42,8 +42,8 @@ const ChefSection = () => {
                 href={process.env.NEXT_PUBLIC_INSTAGRAM}
                 target="_blank"
                 className={cn(
-                  buttonVariants({ variant: "outline" }),
-                  "sm:text-xl",
+                  buttonVariants({ variant: 'outline' }),
+                  'sm:text-xl',
                 )}
               >
                 Check my Instagram

@@ -1,13 +1,13 @@
-import XDraggableList from '@/components/custom/XDraggableList';
+import XDraggableList from '@/presentation/components/custom/XDraggableList';
 import { IDbProduct } from '@/shared/interfaces/IDbProduct';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 import { IMenuItem } from '@/shared/interfaces/IMenuItem';
-import { displayCategoryLocaleName } from '@/lib/products-sorting/displayCategoryLocaleName';
-import { genenerateMenuItemsArray } from '@/lib/products-sorting/generarteMenuItemsArrayWithLocale';
-import { generateTypeOrderedMenu } from '@/lib/products-sorting/generateTypeOrderedMenu';
+import { displayCategoryLocaleName } from '@/shared/lib/products-sorting/displayCategoryLocaleName';
+import { genenerateMenuItemsArray } from '@/shared/lib/products-sorting/generarteMenuItemsArrayWithLocale';
+import { generateTypeOrderedMenu } from '@/shared/lib/products-sorting/generateTypeOrderedMenu';
 import { MenuItemCard } from './MenuItemCard';
 import { TLocales } from '@/shared/types/TLocales';
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '@/presentation/components/ui/separator';
 
 export const Menu = ({
   locale,

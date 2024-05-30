@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { dbConnect, dbDisconnect } from '@/database/db';
 import { IActionResponse } from '@/shared/interfaces/IActionResponses';
 import { ISocialData } from '@/shared/interfaces/ISocialData';
-import { socialMediaSchema } from '@/lib/schemas/socialMediaSchema';
+import { socialMediaSchema } from '@/shared/lib/schemas/socialMediaSchema';
 import SocialMedia from '@/models/SocialMedia';
 
 export const updateSocialMediaAction = async (

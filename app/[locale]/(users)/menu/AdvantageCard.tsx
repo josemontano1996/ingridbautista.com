@@ -1,6 +1,6 @@
 import React from 'react';
 import { IAdvantage } from '@/shared/interfaces/IAdvantage';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 /**
  * Renders a card component for displaying an advantage.

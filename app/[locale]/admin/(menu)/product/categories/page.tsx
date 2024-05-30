@@ -1,6 +1,6 @@
 import { CreateCategoryForm } from '@/app/[locale]/admin/(menu)/product/categories/CreateCategoryForm';
 import { ManageCategorySection } from '@/app/[locale]/admin/(menu)/product/categories/ManageCategorySection';
-import { CategoryStoreZustandInitializer } from '@/components/zustand-initializer/CategoryStoreZustandInitializer';
+import { CategoryStoreZustandInitializer } from '@/presentation/components/zustand-initializer/CategoryStoreZustandInitializer';
 import { dbConnect } from '@/database/db';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 import ProductCategory from '@/models/ProductCategory';

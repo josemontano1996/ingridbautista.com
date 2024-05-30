@@ -38,7 +38,7 @@ export interface IDbUser {
   name: string;
   email: string;
   role?: TUserRole;
-  password?: string;
+  password: string;
 
   createdAt?: string;
   updatedAt?: string;

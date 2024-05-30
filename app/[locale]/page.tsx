@@ -1,6 +1,6 @@
-import MaxWidthWrapper from '@/components/custom/wrappers/MaxWidthWrapper';
+import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
 
-import MainNavBar from '@/components/custom/NavBar/MainNavBar';
+import MainNavBar from '@/presentation/components/custom/NavBar/MainNavBar';
 import HeroSection from '@/app/[locale]/HeroSection';
 import ChefSection from '@/app/[locale]/ChefSection';
 import { ExperiencesSectionSmall } from '@/app/[locale]/ExperienceSectionSmall';

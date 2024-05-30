@@ -1,7 +1,7 @@
 import { Menu } from '@/app/[locale]/(users)/menu/Menu';
 import { MenuHeader } from '@/app/[locale]/(users)/menu/MenuHeader';
 import { AdvantagesSection } from '@/app/[locale]/(users)/menu/AdvantagesSection';
-import MainNavBar from '@/components/custom/NavBar/MainNavBar';
+import MainNavBar from '@/presentation/components/custom/NavBar/MainNavBar';
 import { dbConnect, dbDisconnect } from '@/database/db';
 import { IDbProduct } from '@/shared/interfaces/IDbProduct';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
@@ -9,7 +9,7 @@ import Product from '@/models/Product';
 import ProductCategory from '@/models/ProductCategory';
 import { TLocales } from '@/shared/types/TLocales';
 import MenuMidNav from '@/app/[locale]/(users)/menu/MenuMidNav';
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '@/presentation/components/ui/separator';
 
 const MenuPage = async ({
   params: { locale },

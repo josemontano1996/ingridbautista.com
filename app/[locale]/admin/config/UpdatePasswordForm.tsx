@@ -10,12 +10,12 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { FormButton } from '@/components/custom/FormButton';
+} from '@/presentation/components/ui/form';
+import { Input } from '@/presentation/components/ui/input';
+import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { updatePasswordUserAction } from '@/actions/user-actions';
-import { updatePasswordFormSchema } from '@/lib/schemas/userFormSchema';
+import { updatePasswordFormSchema } from '@/shared/lib/schemas/userFormSchema';
 
 export const UpdatePasswordForm: FC = (): JSX.Element => {
   const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);

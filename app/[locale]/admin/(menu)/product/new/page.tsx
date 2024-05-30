@@ -1,5 +1,5 @@
 import NewProductForm from '@/app/[locale]/admin/(menu)/product/new/NewProductForm';
-import MaxWidthWrapper from '@/components/custom/wrappers/MaxWidthWrapper';
+import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
 import { dbConnect } from '@/database/db';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 import ProductCategory from '@/models/ProductCategory';

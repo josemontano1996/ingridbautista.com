@@ -13,11 +13,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { categoryFormSchema } from '@/lib/schemas/categoryFormSchema';
+} from '@/presentation/components/ui/form';
+import { Input } from '@/presentation/components/ui/input';
+import { categoryFormSchema } from '@/shared/lib/schemas/categoryFormSchema';
 import { createCategoryAction } from '@/actions/category-actions';
-import { FormButton } from '@/components/custom/FormButton';
+import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 

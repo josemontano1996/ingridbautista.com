@@ -5,10 +5,13 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Input } from '@/components/ui/input';
+import { Input } from '@/presentation/components/ui/input';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import { categoryFormSchema } from '@/lib/schemas/categoryFormSchema';
-import { DialogClose, DialogContent } from '@/components/ui/dialog';
+import { categoryFormSchema } from '@/shared/lib/schemas/categoryFormSchema';
+import {
+  DialogClose,
+  DialogContent,
+} from '@/presentation/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -17,8 +20,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { FormButton } from '@/components/custom/FormButton';
+} from '@/presentation/components/ui/form';
+import { FormButton } from '@/presentation/components/custom/FormButton';
 import { updateCategoryAction } from '@/actions/category-actions';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { useStatusStore } from '@/presentation/state-management/statusStore';

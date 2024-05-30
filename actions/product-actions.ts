@@ -5,7 +5,7 @@ import { IProductActionResponse } from '@/shared/interfaces/IActionResponses';
 import {
   createProductFormSchema,
   updateProductFormSchema,
-} from '@/lib/schemas/productFormSchemas';
+} from '@/shared/lib/schemas/productFormSchemas';
 import { dbConnect, dbDisconnect } from '@/database/db';
 import {
   deleteImageFromCloudinary,

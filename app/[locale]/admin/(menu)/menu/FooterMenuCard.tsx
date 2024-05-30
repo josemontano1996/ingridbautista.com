@@ -1,11 +1,11 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { CardFooter } from '@/components/ui/card';
-import { MenuItemInfoDialog } from '../../../../../components/custom/MenuItemInfoDialog';
+import { cn } from '@/shared/lib/utils';
+import { Button, buttonVariants } from '@/presentation/components/ui/button';
+import { CardFooter } from '@/presentation/components/ui/card';
+import { MenuItemInfoDialog } from '../../../../../presentation/components/custom/MenuItemInfoDialog';
 import { IMenuItem } from '@/shared/interfaces/IMenuItem';
-import LocaleLink from '@/components/custom/LocaleLink';
+import LocaleLink from '@/presentation/components/custom/LocaleLink';
 import { DeleteProductButton } from './DeleteProductButton';
 import { TLocales } from '../../../../../shared/types/TLocales';
 

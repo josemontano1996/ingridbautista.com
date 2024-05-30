@@ -1,9 +1,5 @@
 import mongoose from 'mongoose';
 
-declare global {
-  var mongoose: any; // This must be a `var` and not a `let / const`
-}
-
 const MONGODB_URI = process.env.MONGO_URL!;
 
 if (!MONGODB_URI) {
@@ -12,28 +8,12 @@ if (!MONGODB_URI) {
   );
 }
 
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
-
 export async function connectDB() {
-  if (cached.conn) {
-    return cached.conn;
-  }
-
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
-      return mongoose;
-    });
-  }
   try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
+    const conn = await mongoose.connect(MONGODB_URI);
+    return conn;
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    throw error;
   }
-
-  return cached.conn;
 }

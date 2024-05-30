@@ -1,12 +1,12 @@
 import { IDbProduct } from '@/shared/interfaces/IDbProduct';
 import { IMenuItem } from '@/shared/interfaces/IMenuItem';
 
-import { genenerateMenuItemsArray } from '@/lib/products-sorting/generarteMenuItemsArrayWithLocale';
-import { generateTypeOrderedMenu } from '@/lib/products-sorting/generateTypeOrderedMenu';
+import { genenerateMenuItemsArray } from '@/shared/lib/products-sorting/generarteMenuItemsArrayWithLocale';
+import { generateTypeOrderedMenu } from '@/shared/lib/products-sorting/generateTypeOrderedMenu';
 
-import XDraggableList from '@/components/custom/XDraggableList';
+import XDraggableList from '@/presentation/components/custom/XDraggableList';
 
-import { displayCategoryLocaleName } from '@/lib/products-sorting/displayCategoryLocaleName';
+import { displayCategoryLocaleName } from '@/shared/lib/products-sorting/displayCategoryLocaleName';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 
 import { TLocales } from '@/shared/types/TLocales';

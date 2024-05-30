@@ -1,4 +1,4 @@
-import AdminNavBar from '@/components/custom/NavBar/AdminNavBar';
+import AdminNavBar from '@/presentation/components/custom/NavBar/AdminNavBar';
 
 const AdminLayout = async ({
   children,

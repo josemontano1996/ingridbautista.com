@@ -1,11 +1,11 @@
 import AdminMenu from '@/app/[locale]/admin/(menu)/menu/AdminMenu';
-import LocaleLink from '@/components/custom/LocaleLink';
-import MaxWidthWrapper from '@/components/custom/wrappers/MaxWidthWrapper';
-import { buttonVariants } from '@/components/ui/button';
+import LocaleLink from '@/presentation/components/custom/LocaleLink';
+import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
+import { buttonVariants } from '@/presentation/components/ui/button';
 import { dbConnect } from '@/database/db';
 import { IDbProduct } from '@/shared/interfaces/IDbProduct';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import Product from '@/models/Product';
 import ProductCategory from '@/models/ProductCategory';
 import { TLocales } from '@/shared/types/TLocales';

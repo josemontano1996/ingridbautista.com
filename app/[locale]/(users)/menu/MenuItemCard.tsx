@@ -1,6 +1,6 @@
-import initTranslations from '@/lib/i18n';
+import initTranslations from '@/shared/lib/i18n';
 import { TLocales } from '@/shared/types/TLocales';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 import { IMenuItem } from '@/shared/interfaces/IMenuItem';
 import {
   Card,
@@ -9,11 +9,11 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from '@/components/ui/card';
+} from '@/presentation/components/ui/card';
 import { truncateString } from '@/shared/utils/truncateString';
 import { capitalize } from '@/shared/utils/capitalize';
-import CardImage from '@/components/custom/CardImage';
-import { MenuItemInfoDialog } from '@/components/custom/MenuItemInfoDialog';
+import CardImage from '@/presentation/components/custom/CardImage';
+import { MenuItemInfoDialog } from '@/presentation/components/custom/MenuItemInfoDialog';
 
 export const MenuItemCard = async ({
   locale,
