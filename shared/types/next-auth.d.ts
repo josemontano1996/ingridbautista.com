@@ -1,4 +1,4 @@
-import { IAuthUser } from '@/shared/interfaces/IAuthUser';
+import { NoPasswordUserDto } from '@/application/dto/UserEntityDto';
 import NextAuth from 'next-auth';
 
 declare module 'next-auth' {
@@ -7,6 +7,6 @@ declare module 'next-auth' {
    */
   interface Session {
     accessToken: string;
-    user: IAuthUser;
+    user: NoPasswordUserDto;
   }
 }

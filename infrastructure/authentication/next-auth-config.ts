@@ -1,7 +1,8 @@
-import { loginUser } from '@/database/UsersDb';
-import { IAuthUser } from '@/shared/interfaces/IAuthUser';
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { UserRepository } from '../persistence/respositories/UserRepository';
+import { AuthUseCaseServer } from '../../application/use-cases/AuthUseCaseServer';
+import { UserDto } from '@/application/dto/UserDto';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -12,7 +13,9 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const userResult = await loginUser(
+        const AuthUseCaseInstance = new AuthUseCaseServer(new UserRepository());
+
+        const userResult = await AuthUseCaseInstance.loginUser(
           credentials?.email!,
           credentials?.password!,
         );
@@ -20,6 +23,7 @@ export const authOptions: NextAuthOptions = {
         if (!userResult) {
           return null; // Login failed, return null
         }
+
         return userResult; // Login successful, return user object
       },
     }),
@@ -45,7 +49,7 @@ export const authOptions: NextAuthOptions = {
 
     async session({ session, token }) {
       session.accessToken = token.accessToken as string;
-      session.user = token.user as IAuthUser;
+      session.user = token.user as UserDto;
       return session;
     },
   },

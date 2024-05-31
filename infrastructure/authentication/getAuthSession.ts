@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth';
-import { authOptions } from './next-auth-config';
 import { Session } from 'next-auth';
+import { authOptions } from './next-auth-config';
 
 /**
  * Retrieves the authentication session.

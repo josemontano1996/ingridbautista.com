@@ -1,17 +1,18 @@
+import bcrypt from 'bcryptjs';
 import { ZodError, z } from 'zod';
 import { ZodValidationError } from '@/application/errors/ValidationError';
-import { verifyPassword } from '@/infrastructure/authentication/utils';
 import { TUserRole, zodUserRoleType } from '@/shared/types/TUserRole';
+import { UserDto } from '@/application/dto/UserDto';
 
 export class UserEntity {
   constructor(
-    private _id: string | undefined = undefined,
+    private id: string | undefined = undefined,
     private name: string,
     private email: string,
     private role: TUserRole,
     private password: string | undefined = undefined,
   ) {
-    this._id = _id;
+    this.id = id?.toString();
     this.name = name;
     this.email = email;
     this.role = role;
@@ -20,13 +21,13 @@ export class UserEntity {
     this.validate();
   }
 
-  async verifyPassword(password: string): Promise<boolean> {
+  async verifyPassword(hashedPassword: string): Promise<boolean> {
     if (!this.password) throw new Error('Password is not set');
-    return await verifyPassword(password, this.password);
+    return await bcrypt.compare(this.password, hashedPassword);
   }
 
   getId(): string | undefined {
-    return this._id;
+    return this.id;
   }
 
   getName(): string {
@@ -41,9 +42,17 @@ export class UserEntity {
     return this.role;
   }
 
+  toUserDto(): UserDto {
+    return {
+      id: this.getId()!,
+      name: this.getName(),
+      email: this.getEmail(),
+      role: this.getRole(),
+    };
+  }
   private validate() {
     const entitySchema = z.object({
-      _id: z.string().optional(),
+      id: z.string().optional(),
       name: z.string().min(1),
       email: z.string().email(),
       role: zodUserRoleType,

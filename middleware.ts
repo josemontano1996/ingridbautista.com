@@ -2,12 +2,12 @@ import { i18nRouter } from 'next-i18n-router';
 import i18nConfig from './i18nConfig';
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import { IAuthUser } from './shared/interfaces/IAuthUser';
+import { NoPasswordUserDto } from './application/dto/mappers/UserEntityMapper';
 
 export async function middleware(req: NextRequest) {
   const requestedPage = req.nextUrl.pathname;
   const authToken = await getToken({ req });
-  const user = (authToken?.user as IAuthUser) || undefined;
+  const user = (authToken?.user as NoPasswordUserDto) || undefined;
   const userRole = user?.role;
 
   let locale = requestedPage.split('/')[1];

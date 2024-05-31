@@ -1,17 +1,17 @@
 'use server';
 
-import { createLoginAuthUserDto } from '@/application/dto/AuthUserDto';
-import { mapperUserEntityNoPasswordDto } from '@/domain/dto-entities/UserEntityDto';
-
 import { UserEntity } from '@/domain/entities/UserEntity';
 import { UserRepository } from '@/infrastructure/persistence/respositories/UserRepository';
 
-export class AuthUseCase {
+import { createLoginAuthUserDto } from '../dto/AuthUserDto';
+import { UserDto } from '../dto/UserDto';
+
+export class AuthUseCaseServer {
   constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
 
-  async loginUser(email: string, password: string) {
+  async loginUser(email: string, password: string): Promise<UserDto | null> {
     try {
       const authUserDto = createLoginAuthUserDto({ email, password });
 
@@ -37,7 +37,7 @@ export class AuthUseCase {
         throw new Error('Invalid email or password');
       }
 
-      return mapperUserEntityNoPasswordDto(user);
+      return user.toUserDto();
     } catch (error) {
       console.error('Error during login', error);
       return null;

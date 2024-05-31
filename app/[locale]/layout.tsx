@@ -9,9 +9,10 @@ import { cn } from '@/shared/lib/utils';
 
 import AuthProvider from '@/presentation/components/providers/SessionProvider';
 import AppStatusDialog from '@/presentation/components/custom/AppStatusDialog';
-import TranslationsProvider from '@/presentation/components/ui/providers/TranslationsProvider';
+
 import initTranslations from '@/shared/lib/i18n';
 import { Suspense } from 'react';
+import TranslationsProvider from '@/presentation/components/providers/TranslationsProvider';
 
 const cormorant = Cormorant({ subsets: ['latin'] });
 

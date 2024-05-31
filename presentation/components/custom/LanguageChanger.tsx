@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import i18nConfig from '@/i18nConfig';
-import { localesConst } from '@/consts/localesConst';
+
 
 /**
  * Renders a select element that allows the user to change the language of the website.
@@ -50,7 +50,7 @@ export default function LanguageChanger() {
       value={currentLocale}
       className="mx-auto block bg-transparent text-xl"
     >
-      {localesConst.map((locale) => (
+      {i18nConfig.locales.map((locale) => (
         <option key={locale} value={locale}>
           {locale.toUpperCase()}
         </option>
