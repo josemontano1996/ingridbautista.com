@@ -1,4 +1,4 @@
-import translationObjectAllergens from '@/consts/allergens';
+import translationObjectAllergens from '@/shared/consts/allergens';
 import { TAllergen } from '@/shared/types/TAllergens';
 import { TLocales } from '@/shared/types/TLocales';
 

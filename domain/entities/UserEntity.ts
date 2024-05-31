@@ -12,6 +12,7 @@ export class UserEntity {
     private role: TUserRole,
     private password: string | undefined = undefined,
   ) {
+
     this.id = id?.toString();
     this.name = name;
     this.email = email;
@@ -56,7 +57,7 @@ export class UserEntity {
       name: z.string().min(1),
       email: z.string().email(),
       role: zodUserRoleType,
-      password: z.string().optional(),
+      password: z.string().min(8).optional(),
     });
 
     try {

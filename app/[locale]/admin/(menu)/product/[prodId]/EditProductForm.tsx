@@ -24,7 +24,7 @@ import {
 import { Textarea } from '@/presentation/components/ui/textarea';
 import { Checkbox } from '@/presentation/components/ui/checkbox';
 
-import { allergensArray } from '@/consts/allergens';
+import { allergensArray } from '@/shared/consts/allergens';
 import { capitalize } from '@/shared/utils/capitalize';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 import { FormButton } from '@/presentation/components/custom/FormButton';

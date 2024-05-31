@@ -14,7 +14,7 @@ import {
 import useStore from '@/presentation/state-management/useStore';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { EditCategoryForm } from './EditCategoryForm';
-import { cn } from '../../../../../../shared/lib/utils';
+import { cn } from '../../../../../../shared/utils/utils';
 import { DeleteCategory } from './DeleteCategory';
 
 export const ManageCategorySection = () => {

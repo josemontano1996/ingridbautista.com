@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
 
-export const hashStringSync = (str: string): string => {
-  return bcrypt.hashSync(str, 10);
+export const hashStringSync = (str: string, salt?: string | number): string => {
+  return bcrypt.hashSync(str, salt || 10);
 };
