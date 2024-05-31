@@ -3,10 +3,14 @@
 import { UserEntity } from '@/domain/entities/UserEntity';
 import { UserRepository } from '@/infrastructure/persistence/respositories/UserRepository';
 
-import { createLoginAuthUserDto } from '../dto/AuthUserDto';
-import { UserDto } from '../dto/UserDto';
+import { createLoginAuthUserDto } from '../../dto/AuthUserDto';
+import { UserDto } from '../../dto/UserDto';
+import { Console } from 'console';
+import { ConsoleError } from '@/application/errors/ConsoleError';
+import { ZodValidationError } from '@/application/errors/ValidationError';
+import { ZodError } from 'zod';
 
-export class AuthUseCaseServer {
+export class ServerAuthUseCase {
   constructor(private readonly userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
@@ -39,7 +43,8 @@ export class AuthUseCaseServer {
 
       return user.toUserDto();
     } catch (error) {
-      console.error('Error during login', error);
+      ConsoleError.logError(error as Error);
+     
       return null;
     }
   }

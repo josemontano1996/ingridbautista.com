@@ -1,5 +1,4 @@
 import { ZodError } from 'zod';
-import { ICustomError } from './error-interface';
 
 export type TZodErrorList = {
   [x: string]: string[] | undefined;
@@ -7,16 +6,11 @@ export type TZodErrorList = {
   [x: symbol]: string[] | undefined;
 };
 
-export class ZodValidationError extends Error implements ICustomError {
-  private errors: TZodErrorList;
-
+export class ZodValidationError extends Error {
   constructor(errors: ZodError, message: string) {
     super(message);
     this.name = 'ZodValidationError';
-    this.errors = errors.flatten().fieldErrors;
-  }
-
-  getErrors() {
-    return this.errors;
+    this.cause = errors.flatten().fieldErrors;
+    this.stack = errors.stack;
   }
 }
