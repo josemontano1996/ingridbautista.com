@@ -1,13 +1,10 @@
-import { redirect } from 'next/navigation';
-
 import { AdminAccountData } from '@/app/[locale]/admin/config/AdminAccountData';
 
 import { AdminSocialMediaForm } from './AdminSocialMediaForm';
 import { serializeData } from '@/application/utils/serializeData';
 import { SocialMediaDto } from '@/application/dto/SocialMediaDto';
-import { ServerGetSocialMedia } from '@/application/use-cases/server-side/ServerSocialData';
+import { ServerGetSocialMedia } from '@/application/use-cases/server-side/ServerSocialMedia';
 import { SocialMediaRepository } from '@/infrastructure/persistence/respositories/SocialDataRespository';
-
 
 const ConfigPage = async ({
   params: { locale },

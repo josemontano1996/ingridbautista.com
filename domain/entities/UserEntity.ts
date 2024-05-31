@@ -3,6 +3,7 @@ import { ZodError, z } from 'zod';
 import { ZodValidationError } from '@/application/errors/ValidationError';
 import { TUserRole, zodUserRoleType } from '@/shared/types/TUserRole';
 import { UserDto } from '@/application/dto/UserDto';
+import { hashStringSync } from '@/shared/utils/hashString';
 
 export interface IUserEntity {
   getId(): string | undefined;
@@ -34,6 +35,22 @@ export class UserEntity implements IUserEntity {
     if (!this.password) throw new Error('Password is not set');
 
     return await bcrypt.compare(hashedPassword, this.password);
+  }
+
+  static async updatePassword({
+    password,
+    confirmPassword,
+  }: {
+    password: string;
+    confirmPassword: string;
+  }): Promise<string> {
+    if (password !== confirmPassword) {
+      throw new Error('Passwords do not match');
+    }
+
+    const hashedPassword = hashStringSync(password);
+
+    return hashedPassword;
   }
 
   getId(): string | undefined {

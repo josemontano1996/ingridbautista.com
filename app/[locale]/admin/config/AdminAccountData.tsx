@@ -1,4 +1,3 @@
-
 import { UpdatePasswordForm } from './UpdatePasswordForm';
 
 export const AdminAccountData = async () => {

@@ -1,4 +1,4 @@
-'use client';
+/* 'use client';
 import { FC } from 'react';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -88,4 +88,4 @@ export const AccountDataForm: FC<Props> = ({ user }): JSX.Element => {
       </form>
     </Form>
   );
-};
+}; */

@@ -15,7 +15,7 @@ import { Input } from '@/presentation/components/ui/input';
 import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { updatePasswordUserAction } from '@/actions/user-actions';
-import { updatePasswordFormSchema } from '@/shared/lib/schemas/userFormSchema';
+import { updatePasswordDtoSchema } from '@/application/dto/UserDto';
 
 export const UpdatePasswordForm: FC = (): JSX.Element => {
   const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
@@ -23,15 +23,15 @@ export const UpdatePasswordForm: FC = (): JSX.Element => {
   const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
   const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
 
-  const form = useForm<z.infer<typeof updatePasswordFormSchema>>({
-    resolver: zodResolver(updatePasswordFormSchema),
+  const form = useForm<z.infer<typeof updatePasswordDtoSchema>>({
+    resolver: zodResolver(updatePasswordDtoSchema),
     defaultValues: {
       password: '',
       confirmPassword: '',
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof updatePasswordFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof updatePasswordDtoSchema>) => {
     clearStatusStore();
 
     if (values.password !== values.confirmPassword) {

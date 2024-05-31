@@ -5,7 +5,4 @@ export const userFormSchema = z.object({
   email: z.string().email(),
 });
 
-export const updatePasswordFormSchema = z.object({
-  password: z.string().min(8),
-  confirmPassword: z.string().min(8),
-});
+

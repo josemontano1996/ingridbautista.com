@@ -10,7 +10,7 @@ import {
   SocialMediaDto,
   socialMediaDtoSchema,
 } from '@/application/dto/SocialMediaDto';
-import { ServerUpdateSocialMedia } from '@/application/use-cases/server-side/ServerSocialData';
+import { ServerUpdateSocialMedia } from '@/application/use-cases/server-side/ServerSocialMedia';
 import { SocialMediaRepository } from '@/infrastructure/persistence/respositories/SocialDataRespository';
 
 export const updateSocialMediaAction = async (

@@ -2,7 +2,7 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { UserRepository } from '../persistence/respositories/UserRepository';
 import { UserDto } from '@/application/dto/UserDto';
-import { serverLogInUseCase } from '@/application/use-cases/server-side/ServerAuthUseCase';
+import { serverLogInUseCase } from '@/application/use-cases/server-side/ServerAuth';
 
 export const authOptions: NextAuthOptions = {
   providers: [

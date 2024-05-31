@@ -6,7 +6,7 @@ import {
 } from '@/application/dto/SocialMediaDto';
 
 import { CacheService } from '@/infrastructure/caching/CacheService';
-import { SOCIAL_MEDIA_TAG } from '@/infrastructure/caching/cache-values';
+import { SOCIAL_MEDIA_TAG } from '@/infrastructure/caching/cache-tags';
 import { ISocialMediaRepository } from '@/infrastructure/persistence/respositories/SocialDataRespository';
 
 export const ServerGetSocialMedia = async (context: {
