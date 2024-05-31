@@ -1,8 +1,8 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { UserRepository } from '../persistence/respositories/UserRepository';
-import { ServerAuthUseCase } from '../../application/use-cases/server-side/ServerAuthUseCase';
 import { UserDto } from '@/application/dto/UserDto';
+import { serverLogInUseCase } from '@/application/use-cases/server-side/ServerAuthUseCase';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -13,13 +13,10 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const AuthUseCaseInstance = new ServerAuthUseCase(new UserRepository());
-
-        const userResult = await AuthUseCaseInstance.loginUser(
-          credentials?.email!,
-          credentials?.password!,
+        const userResult = await serverLogInUseCase(
+          { userRepository: new UserRepository() },
+          { email: credentials!.email, password: credentials!.password },
         );
-
         if (!userResult) {
           return null; // Login failed, return null
         }

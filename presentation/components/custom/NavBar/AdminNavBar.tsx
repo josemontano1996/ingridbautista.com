@@ -1,6 +1,7 @@
 import { ArrowDownAZ, BoltIcon, BookOpen } from 'lucide-react';
-import LocaleLink from '../LocaleLink';
 import AuthButton from '../AuthButton';
+import LocaleLink from '../LocaleLink';
+
 
 const AdminNavBar = async () => {
   return (

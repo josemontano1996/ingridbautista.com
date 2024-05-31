@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/shared/lib/utils';
+
 import { Button, buttonVariants } from '@/presentation/components/ui/button';
 import { CardFooter } from '@/presentation/components/ui/card';
 import { MenuItemInfoDialog } from '../../../../../presentation/components/custom/MenuItemInfoDialog';
@@ -8,6 +8,7 @@ import { IMenuItem } from '@/shared/interfaces/IMenuItem';
 import LocaleLink from '@/presentation/components/custom/LocaleLink';
 import { DeleteProductButton } from './DeleteProductButton';
 import { TLocales } from '../../../../../shared/types/TLocales';
+import { cn } from '@/shared/utils/utils';
 
 export const FooterMenuCard = ({
   locale,

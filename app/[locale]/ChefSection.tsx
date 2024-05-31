@@ -1,9 +1,9 @@
 import Image from 'next/image';
-
 import { buttonVariants } from '@/presentation/components/ui/button';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/utils/utils';
+import { TLocales } from '@/shared/types/TLocales';
 
-const ChefSection = () => {
+const ChefSection = ({ locale }: { locale: TLocales }) => {
   return (
     <>
       <section id="chef" className="text-center">

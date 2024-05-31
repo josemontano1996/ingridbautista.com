@@ -1,14 +1,16 @@
 import NewProductForm from '@/app/[locale]/admin/(menu)/product/new/NewProductForm';
 import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
-import { dbConnect } from '@/database/db';
+
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import ProductCategory from '@/models/ProductCategory';
+
+import { connectDB } from '@/infrastructure/persistence/database-config';
+import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
 
 const NewProductPage = async () => {
   let categories: IFecthedCategory[] = [];
 
   try {
-    await dbConnect();
+    await connectDB();
 
     categories = await ProductCategory.find().sort({ order: 1 }).lean();
 
@@ -19,9 +21,7 @@ const NewProductPage = async () => {
     }
   } catch (error) {
     console.error(error);
-  } /* finally {
-    await dbDisconnect();
-  } */
+  } 
 
   return (
     <MaxWidthWrapper>

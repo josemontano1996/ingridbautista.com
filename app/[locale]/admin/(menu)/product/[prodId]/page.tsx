@@ -1,10 +1,11 @@
 import { redirect } from 'next/navigation';
-import { dbConnect, dbDisconnect } from '@/database/db';
+
 import EditProductForm from '@/app/[locale]/admin/(menu)/product/[prodId]/EditProductForm';
 import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import Product from '@/models/Product';
-import ProductCategory from '@/models/ProductCategory';
+import { connectDB } from '@/infrastructure/persistence/database-config';
+import Product from '@/infrastructure/persistence/models/Product';
+import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
 
 interface Props {
   params: { prodId: string };
@@ -17,7 +18,7 @@ const EditProductPage = async ({ params: { prodId } }: Props) => {
   let product = null;
 
   try {
-    await dbConnect();
+    await connectDB();
 
     product = await Product.findOne({ _id: prodId }).lean();
 
@@ -32,9 +33,7 @@ const EditProductPage = async ({ params: { prodId } }: Props) => {
     }
   } catch (error) {
     console.error(error);
-  } finally {
-    await dbDisconnect();
-  }
+  } 
 
   if (!product) {
     //redirect throws error so it should be called outsite of trycatch

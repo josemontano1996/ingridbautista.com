@@ -5,14 +5,14 @@ import { dir } from 'i18next';
 import i18nConfig from '@/i18nConfig';
 import '../globals.css';
 import { Footer } from '@/presentation/components/custom/Footer';
-import { cn } from '@/shared/lib/utils';
 
 import AuthProvider from '@/presentation/components/providers/SessionProvider';
 import AppStatusDialog from '@/presentation/components/custom/AppStatusDialog';
 
-import initTranslations from '@/shared/lib/i18n';
 import { Suspense } from 'react';
 import TranslationsProvider from '@/presentation/components/providers/TranslationsProvider';
+import { cn } from '@/shared/utils/utils';
+import initTranslations from '@/infrastructure/i18n/i18n';
 
 const cormorant = Cormorant({ subsets: ['latin'] });
 

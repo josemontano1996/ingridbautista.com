@@ -4,7 +4,16 @@ import { ZodValidationError } from '@/application/errors/ValidationError';
 import { TUserRole, zodUserRoleType } from '@/shared/types/TUserRole';
 import { UserDto } from '@/application/dto/UserDto';
 
-export class UserEntity {
+export interface IUserEntity {
+  getId(): string | undefined;
+  getName(): string;
+  getEmail(): string;
+  getRole(): TUserRole;
+  toUserDto(): UserDto;
+  verifyPassword(hashedPassword: string): Promise<boolean>;
+}
+
+export class UserEntity implements IUserEntity {
   constructor(
     private id: string | undefined = undefined,
     private name: string,
@@ -12,7 +21,6 @@ export class UserEntity {
     private role: TUserRole,
     private password: string | undefined = undefined,
   ) {
-
     this.id = id?.toString();
     this.name = name;
     this.email = email;

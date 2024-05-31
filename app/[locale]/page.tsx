@@ -3,10 +3,11 @@ import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthW
 import MainNavBar from '@/presentation/components/custom/NavBar/MainNavBar';
 import HeroSection from '@/app/[locale]/HeroSection';
 import ChefSection from '@/app/[locale]/ChefSection';
-import { ExperiencesSectionSmall } from '@/app/[locale]/ExperienceSectionSmall';
-import { ExperiencesSectionBig } from '@/app/[locale]/ExperienceSectionBig';
+
 import HomeMidNav from '@/app/[locale]/HomeMidNav';
 import { TLocales } from '@/shared/types/TLocales';
+import { ExperiencesSectionBig } from '@/app/[locale]/ExperienceSectionBig';
+import { ExperiencesSectionSmall } from '@/app/[locale]/ExperienceSectionSmall';
 
 export default function Home({ params }: { params: { locale: TLocales } }) {
   const { locale } = params;
@@ -17,12 +18,12 @@ export default function Home({ params }: { params: { locale: TLocales } }) {
         midNavBarElement={<HomeMidNav locale={locale} />}
         locale={locale}
       />
-      <HeroSection />
+      <HeroSection locale={locale} />
       <MaxWidthWrapper>
-        <ChefSection />
+        <ChefSection locale={locale} />
         <section id="experiences">
-          <ExperiencesSectionBig />
-          <ExperiencesSectionSmall />
+          <ExperiencesSectionBig locale={locale} />
+          <ExperiencesSectionSmall locale={locale} />
         </section>
       </MaxWidthWrapper>
     </>

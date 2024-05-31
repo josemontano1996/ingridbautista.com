@@ -2,7 +2,9 @@
 import { FC, ReactNode } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/utils/utils';
+
+
 
 interface Props {
   children: ReactNode;

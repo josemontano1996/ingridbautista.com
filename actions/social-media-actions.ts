@@ -1,11 +1,12 @@
 'use server';
 
 import { z } from 'zod';
-import { dbConnect, dbDisconnect } from '@/database/db';
+
 import { IActionResponse } from '@/shared/interfaces/IActionResponses';
 import { ISocialData } from '@/shared/interfaces/ISocialData';
 import { socialMediaSchema } from '@/shared/lib/schemas/socialMediaSchema';
-import SocialMedia from '@/models/SocialMedia';
+import SocialMedia from '@/infrastructure/persistence/models/SocialMedia';
+import { connectDB } from '@/infrastructure/persistence/database-config';
 
 export const updateSocialMediaAction = async (
   values: z.infer<typeof socialMediaSchema>,
@@ -21,7 +22,7 @@ export const updateSocialMediaAction = async (
 
   try {
     let socialData: ISocialData = { ...parsed.data };
-    await dbConnect();
+    await connectDB();
 
     const result = await SocialMedia.findOneAndUpdate(
       {},
@@ -44,7 +45,5 @@ export const updateSocialMediaAction = async (
       success: false,
       message: 'Ha ocurrido un error',
     };
-  } finally {
-    await dbDisconnect();
   }
 };

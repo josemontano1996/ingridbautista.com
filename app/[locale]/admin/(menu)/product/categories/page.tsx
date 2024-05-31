@@ -1,15 +1,17 @@
 import { CreateCategoryForm } from '@/app/[locale]/admin/(menu)/product/categories/CreateCategoryForm';
 import { ManageCategorySection } from '@/app/[locale]/admin/(menu)/product/categories/ManageCategorySection';
+import { connectDB } from '@/infrastructure/persistence/database-config';
+import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
 import { CategoryStoreZustandInitializer } from '@/presentation/components/zustand-initializer/CategoryStoreZustandInitializer';
-import { dbConnect } from '@/database/db';
+
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import ProductCategory from '@/models/ProductCategory';
+
 
 const CategoryManagementPage = async () => {
   let categories: IFecthedCategory[] = [];
 
   try {
-    await dbConnect();
+    await connectDB();
 
     categories = await ProductCategory.find().sort({ order: 1 }).lean();
 
@@ -20,10 +22,8 @@ const CategoryManagementPage = async () => {
     }
   } catch (error) {
     console.error(error);
-  } /* finally {
-    await dbDisconnect();
-  }
- */
+  } 
+  
   return (
     <div className="px-[3vw]">
       <CategoryStoreZustandInitializer fetchedCategories={categories} />

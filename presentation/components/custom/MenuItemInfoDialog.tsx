@@ -1,4 +1,5 @@
-import initTranslations from '@/shared/lib/i18n';
+import initTranslations from '@/infrastructure/i18n/i18n';
+
 import { capitalize } from '@/shared/utils/capitalize';
 import { TLocales } from '@/shared/types/TLocales';
 import { IMenuItem } from '@/shared/interfaces/IMenuItem';
@@ -10,9 +11,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/presentation/components/ui/dialog';
-import { cn } from '@/shared/lib/utils';
+
 import { buttonVariants } from '@/presentation/components/ui/button';
 import CardImage from './CardImage';
+import { cn } from '@/shared/utils/utils';
 
 export const MenuItemInfoDialog = async ({
   locale,

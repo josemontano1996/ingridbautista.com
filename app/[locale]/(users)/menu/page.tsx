@@ -2,14 +2,16 @@ import { Menu } from '@/app/[locale]/(users)/menu/Menu';
 import { MenuHeader } from '@/app/[locale]/(users)/menu/MenuHeader';
 import { AdvantagesSection } from '@/app/[locale]/(users)/menu/AdvantagesSection';
 import MainNavBar from '@/presentation/components/custom/NavBar/MainNavBar';
-import { dbConnect, dbDisconnect } from '@/database/db';
+
 import { IDbProduct } from '@/shared/interfaces/IDbProduct';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import Product from '@/models/Product';
-import ProductCategory from '@/models/ProductCategory';
+
 import { TLocales } from '@/shared/types/TLocales';
 import MenuMidNav from '@/app/[locale]/(users)/menu/MenuMidNav';
 import { Separator } from '@/presentation/components/ui/separator';
+import { connectDB } from '@/infrastructure/persistence/database-config';
+import Product from '@/infrastructure/persistence/models/Product';
+import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
 
 const MenuPage = async ({
   params: { locale },
@@ -20,7 +22,7 @@ const MenuPage = async ({
   let fetchedCategories: IFecthedCategory[] | null = null;
 
   try {
-    await dbConnect();
+    await connectDB();
 
     dbProducts = await Product.find().lean();
     if (!dbProducts) return null;
@@ -37,9 +39,7 @@ const MenuPage = async ({
     }
   } catch (error) {
     console.error(error);
-  } /* finally {
-    await dbDisconnect();
-  } */
+  } 
   return (
     <>
       <MainNavBar

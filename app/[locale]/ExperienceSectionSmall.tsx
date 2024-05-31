@@ -1,12 +1,11 @@
-import { FC } from 'react';
-
 import Image from 'next/image';
+import { cn } from '@/shared/utils/utils';
 
-import { cn } from '@/shared/lib/utils';
 import { buttonVariants } from '@/presentation/components/ui/button';
 import LocaleLink from '@/presentation/components/custom/LocaleLink';
+import { TLocales } from '@/shared/types/TLocales';
 
-export const ExperiencesSectionSmall: FC = () => {
+export const ExperiencesSectionSmall = ({ locale }: { locale: TLocales }) => {
   return (
     <div className="text-center md:hidden">
       <h2 className="mb-12 mt-16 text-5xl">The Experience</h2>

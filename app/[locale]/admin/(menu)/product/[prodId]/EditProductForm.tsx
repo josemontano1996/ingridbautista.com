@@ -40,7 +40,7 @@ const EditProductForm = ({
   product,
   categories,
 }: {
-  product: IDbProduct;
+  product: any;
   categories: IFecthedCategory[];
 }) => {
   const router = useRouter();

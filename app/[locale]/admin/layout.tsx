@@ -9,7 +9,7 @@ const AdminLayout = async ({
 }) => {
   return (
     <>
-      <AdminNavBar />
+      <AdminNavBar  />
       {children}
     </>
   );

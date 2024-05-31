@@ -9,9 +9,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../ui/dialog';
-import { cn } from '@/shared/lib/utils';
+
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { useSearchParams } from 'next/navigation';
+import { cn } from '@/shared/utils/utils';
+
 
 /**
  * Component for displaying success and error dialogs based on query parameters.
@@ -56,7 +58,7 @@ const AppStatusDialog = () => {
       <Dialog>
         <DialogTrigger ref={successDialog}></DialogTrigger>
         <DialogContent className={cn('text-center text-primary')}>
-          <DialogTitle className="text-5xl">Éxito</DialogTitle>
+          <DialogTitle className="text-5xl">Success</DialogTitle>
           <DialogDescription className="text-3xl">
             {isSuccess}
           </DialogDescription>

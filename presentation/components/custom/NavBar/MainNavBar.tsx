@@ -34,7 +34,7 @@ const MainNavBar = async ({ locale, midNavBarElement }: Props) => {
           </li>
 
           <li className="h-full">
-            <HamburgerMenu />
+            <HamburgerMenu locale={locale} />
           </li>
         </ul>
       </nav>

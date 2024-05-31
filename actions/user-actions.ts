@@ -8,9 +8,10 @@ import {
   userFormSchema,
 } from '@/shared/lib/schemas/userFormSchema';
 import { IUser } from '@/shared/interfaces/IUser';
-import { dbConnect, dbDisconnect } from '@/database/db';
+
 import { getAuthSession } from '@/infrastructure/authentication/getAuthSession';
-import User from '@/models/User';
+import { connectDB } from '@/infrastructure/persistence/database-config';
+import User from '@/infrastructure/persistence/models/User';
 
 export const updateUserAction = async (
   values: z.infer<typeof userFormSchema>,
@@ -32,7 +33,7 @@ export const updateUserAction = async (
   try {
     const sessionUser = await getAuthSession();
 
-    await dbConnect();
+    await connectDB();
     const result = await User.updateOne(
       {
         _id: sessionUser.user.id,
@@ -56,8 +57,6 @@ export const updateUserAction = async (
       success: false,
       message: 'Error al actualizar usuario',
     };
-  } finally {
-    await dbDisconnect();
   }
 };
 
@@ -88,7 +87,7 @@ export const updatePasswordUserAction = async (
 
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    await dbConnect();
+    await connectDB();
 
     const result = await User.updateOne(
       { _id: user.id },
@@ -110,7 +109,5 @@ export const updatePasswordUserAction = async (
       success: false,
       message: 'Error al actualizar contraseña',
     };
-  } finally {
-    await dbDisconnect();
   }
 };

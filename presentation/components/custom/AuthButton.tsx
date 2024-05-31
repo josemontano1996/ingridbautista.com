@@ -2,8 +2,8 @@
 
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { Button } from '@/presentation/components/ui/button';
-import { cn } from '@/shared/lib/utils';
 import { LogOutIcon, UserIcon } from 'lucide-react';
+import { cn } from '@/shared/utils/utils';
 
 const AuthButton = () => {
   const { data: session } = useSession();

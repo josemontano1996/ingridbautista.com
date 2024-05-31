@@ -21,7 +21,7 @@ const LoginPage = async ({ params: { locale } }: Props) => {
     <>
       <MainNavBar locale={locale} />
       <MaxWidthWrapper>
-        <LogInForm />
+        <LogInForm locale={locale} />
       </MaxWidthWrapper>
     </>
   );

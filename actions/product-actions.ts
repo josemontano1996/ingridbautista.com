@@ -6,15 +6,17 @@ import {
   createProductFormSchema,
   updateProductFormSchema,
 } from '@/shared/lib/schemas/productFormSchemas';
-import { dbConnect, dbDisconnect } from '@/database/db';
+
+import { IDbProduct } from '@/shared/interfaces/IDbProduct';
+
+import { revalidatePath } from 'next/cache';
 import {
   deleteImageFromCloudinary,
   updateImageFromCloudinary,
   uploadImageToCloudinary,
-} from '@/shared/utils/cloudinary';
-import { IDbProduct } from '@/shared/interfaces/IDbProduct';
-import Product from '@/models/Product';
-import { revalidatePath } from 'next/cache';
+} from '@/infrastructure/online-storage/cloudinary';
+import Product from '@/infrastructure/persistence/models/Product';
+import { connectDB } from '@/infrastructure/persistence/database-config';
 
 export const createProductAction = async (
   values: z.infer<typeof createProductFormSchema>,
@@ -40,12 +42,12 @@ export const createProductAction = async (
       };
     }
 
-    const productInstance: IDbProduct = new Product({
+    const productInstance: any = new Product({
       ...parsed.data,
       image: imageUrl,
     });
 
-    await dbConnect();
+    await connectDB();
 
     const result = await productInstance.save();
 
@@ -72,8 +74,6 @@ export const createProductAction = async (
       success: false,
       message: 'Error creating category, try again later.',
     };
-  } finally {
-    await dbDisconnect();
   }
 };
 
@@ -93,7 +93,7 @@ export const updateProductAction = async (
   let imageUrl = null;
 
   try {
-    await dbConnect();
+    await connectDB();
     const oldProduct = await Product.findOne({ _id: id }).lean();
 
     if (!oldProduct) {
@@ -136,8 +136,6 @@ export const updateProductAction = async (
       success: false,
       message: 'Error updating product, try again later.',
     };
-  } finally {
-    await dbDisconnect();
   }
 };
 
@@ -165,7 +163,7 @@ export const deleteProductAction = async (
         };
       }
     }
-    await dbConnect();
+    await connectDB();
     const result = await Product.deleteOne({ _id: prodId });
 
     if (!result) {
@@ -184,7 +182,5 @@ export const deleteProductAction = async (
       success: false,
       message: 'Error deleting product',
     };
-  } finally {
-    await dbDisconnect();
   }
 };

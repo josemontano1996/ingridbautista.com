@@ -3,9 +3,11 @@ import { SmoothScrollLink } from '@/presentation/components/custom/SmoothScrollL
 import LocaleLink from '@/presentation/components/custom/LocaleLink';
 import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
 import { buttonVariants } from '@/presentation/components/ui/button';
-import { cn } from '@/shared/lib/utils';
+import { TLocales } from '@/shared/types/TLocales';
+import { cn } from '@/shared/utils/utils';
 
-const HeroSection = () => {
+
+const HeroSection = ({ locale }: { locale: TLocales }) => {
   return (
     <>
       <div className=" bg-bgAlt py-8">

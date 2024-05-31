@@ -1,8 +1,9 @@
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { deleteProductAction } from '@/actions/product-actions';
 import { Button } from '@/presentation/components/ui/button';
-import { cn } from '@/shared/lib/utils';
+
 import { useRouter } from 'next/navigation';
+import { cn } from '@/shared/utils/utils';
 
 export const DeleteProductButton = ({
   prodId,

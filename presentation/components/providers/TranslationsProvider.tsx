@@ -2,7 +2,8 @@
 
 import { I18nextProvider } from 'react-i18next';
 import { createInstance } from 'i18next';
-import initTranslations from '@/shared/lib/i18n';
+import initTranslations from '@/infrastructure/i18n/i18n';
+
 
 interface Props {
   children: React.ReactNode;

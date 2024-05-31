@@ -1,10 +1,11 @@
 'use client';
 
 import { Button } from '../ui/button';
-import { cn } from '@/shared/lib/utils';
+
 import { TButtonVariant } from '@/shared/types/TButtonVariant';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { FC } from 'react';
+import { cn } from '@/shared/utils/utils';
 
 interface Props {
   text: string;

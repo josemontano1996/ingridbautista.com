@@ -1,54 +1,51 @@
 'use server';
 
 import { UserEntity } from '@/domain/entities/UserEntity';
-import { UserRepository } from '@/infrastructure/persistence/respositories/UserRepository';
+import { IUserRepository, UserRepository } from '@/infrastructure/persistence/respositories/UserRepository';
 import { ConsoleError } from '@/application/errors/ConsoleError';
 import { serializeData } from '@/application/utils/serializeData';
 import { createLoginAuthUserDto } from '@/application/dto/AuthUserDto';
 import { UserDto } from '@/application/dto/UserDto';
 
+export const serverLogInUseCase = async (
+  context: { userRepository: UserRepository },
+  data: { email: string; password: string },
+): Promise<UserDto | null> => {
+  try {
+    const { userRepository } = context;
+    const { email, password } = data;
 
-export class ServerAuthUseCase {
-  constructor(private readonly userRepository: UserRepository) {
-    this.userRepository = userRepository;
-  }
+    const authUserDto = createLoginAuthUserDto({ email, password });
 
-  async loginUser(email: string, password: string): Promise<UserDto | null> {
-    try {
-      const authUserDto = createLoginAuthUserDto({ email, password });
+    const dbUser = await userRepository.getUserByEmail(authUserDto.email);
 
-      const dbUser = await this.userRepository.getUserByEmail(
-        authUserDto.email,
-      );
-
-      if (!dbUser) {
-        throw new Error('Invalid email or password');
-      }
-
-      const serializedData = serializeData(dbUser);
-
-      const user = new UserEntity(
-        serializedData._id,
-        serializedData.name,
-        serializedData.email,
-        serializedData.role,
-        serializedData.password,
-      );
-
-      const passwordMatch = await user.verifyPassword(authUserDto.password);
-
-      if (!passwordMatch) {
-        throw new Error('Invalid email or password');
-      }
-
-      return user.toUserDto();
-    } catch (error) {
-      ConsoleError.logError(error as Error);
-
-      return null;
+    if (!dbUser) {
+      throw new Error('Invalid email or password');
     }
+
+    const serializedData = serializeData(dbUser);
+
+    const user = new UserEntity(
+      serializedData._id,
+      serializedData.name,
+      serializedData.email,
+      serializedData.role,
+      serializedData.password,
+    );
+
+    const passwordMatch = await user.verifyPassword(authUserDto.password);
+
+    if (!passwordMatch) {
+      throw new Error('Invalid email or password');
+    }
+
+    return user.toUserDto();
+  } catch (error) {
+    ConsoleError.logError(error as Error);
+
+    return null;
   }
-}
+};
 
 /* 
 export const registerUser = async ({

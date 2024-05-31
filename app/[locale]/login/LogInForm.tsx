@@ -14,9 +14,11 @@ import {
   FormMessage,
 } from '@/presentation/components/ui/form';
 import { Input } from '@/presentation/components/ui/input';
-import { cn } from '@/shared/lib/utils';
+
 import { FormButton } from '../../../presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
+import { TLocales } from '@/shared/types/TLocales';
+import { cn } from '@/shared/utils/utils';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -25,8 +27,7 @@ const formSchema = z.object({
     .min(8, { message: 'Password must be at least 8 characters long' }),
 });
 
-const LogInForm = () => {
-  const { locale } = useParams();
+const LogInForm = ({ locale }: { locale: TLocales }) => {
   const router = useRouter();
 
   const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);

@@ -1,12 +1,13 @@
 'use server';
 import { z } from 'zod';
 
-import { dbConnect, dbDisconnect } from '@/database/db';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import ProductCategory from '@/models/ProductCategory';
+
 import { ICategoryActionResponse } from '@/shared/interfaces/IActionResponses';
 import { categoryFormSchema } from '@/shared/lib/schemas/categoryFormSchema';
 import { revalidatePath } from 'next/cache';
+import { connectDB } from '@/infrastructure/persistence/database-config';
+import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
 
 export const createCategoryAction = async (
   values: z.infer<typeof categoryFormSchema>,
@@ -28,7 +29,7 @@ export const createCategoryAction = async (
       fr: parsed.data.fr,
     };
 
-    await dbConnect();
+    await connectDB();
     const newCategory = new ProductCategory(category);
 
     const result = await newCategory.save();
@@ -49,8 +50,6 @@ export const createCategoryAction = async (
       success: false,
       message: 'Error creating category, check if category already exists',
     };
-  } finally {
-    await dbDisconnect();
   }
 };
 
@@ -69,7 +68,7 @@ export const updateCategoryAction = async (
   try {
     const { name, order, en, fr, _id }: IFecthedCategory = parsed.data;
 
-    await dbConnect();
+    await connectDB();
 
     const updatedData = await ProductCategory.findOneAndUpdate(
       { _id },
@@ -93,8 +92,6 @@ export const updateCategoryAction = async (
       success: false,
       message: 'Error updating category, check if category already exists.',
     };
-  } finally {
-    await dbDisconnect();
   }
 };
 
@@ -108,7 +105,7 @@ export const deleteCategoryAction = async (
     };
   }
   try {
-    await dbConnect();
+    await connectDB();
 
     const result = await ProductCategory.deleteOne({ name: categoryName });
 
@@ -128,7 +125,5 @@ export const deleteCategoryAction = async (
       success: false,
       message: 'Error deleting category, try again later',
     };
-  } finally {
-    await dbDisconnect();
   }
 };

@@ -8,14 +8,18 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from '@/presentation/components/ui/menubar';
-import { cn } from '@/shared/lib/utils';
+
 import LanguageChanger from '../LanguageChanger';
+
+import { TLocales } from '@/shared/types/TLocales';
+import { cn } from '@/shared/utils/utils';
 
 interface Props {
   sideBarContent?: React.ReactNode;
+  locale: TLocales;
 }
 
-const HamburgerMenu = async ({ sideBarContent }: Props) => {
+const HamburgerMenu = async ({ sideBarContent, locale }: Props) => {
   return (
     <Menubar>
       <MenubarMenu>

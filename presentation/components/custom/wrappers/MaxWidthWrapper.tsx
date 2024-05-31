@@ -1,5 +1,6 @@
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared/utils/utils';
 import { ReactNode } from 'react';
+
 
 /**
  * A wrapper component that sets the maximum width of the content.

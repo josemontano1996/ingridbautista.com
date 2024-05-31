@@ -8,12 +8,13 @@ import {
   CardDescription,
   CardContent,
 } from '@/presentation/components/ui/card';
-import { cn } from '@/shared/lib/utils';
+
 import { truncateString } from '@/shared/utils/truncateString';
 import { FooterMenuCard } from './FooterMenuCard';
 import { capitalize } from '@/shared/utils/capitalize';
 import CardImage from '@/presentation/components/custom/CardImage';
 import { TLocales } from '@/shared/types/TLocales';
+import { cn } from '@/shared/utils/utils';
 
 export const AdminMenuItemCard = ({
   locale,

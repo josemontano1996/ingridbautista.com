@@ -1,14 +1,16 @@
 import AdminMenu from '@/app/[locale]/admin/(menu)/menu/AdminMenu';
+import { connectDB } from '@/infrastructure/persistence/database-config';
+import Product from '@/infrastructure/persistence/models/Product';
+import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
 import LocaleLink from '@/presentation/components/custom/LocaleLink';
 import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
 import { buttonVariants } from '@/presentation/components/ui/button';
-import { dbConnect } from '@/database/db';
+
 import { IDbProduct } from '@/shared/interfaces/IDbProduct';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import { cn } from '@/shared/lib/utils';
-import Product from '@/models/Product';
-import ProductCategory from '@/models/ProductCategory';
+
 import { TLocales } from '@/shared/types/TLocales';
+import { cn } from '@/shared/utils/utils';
 
 const AdminMenuPage = async ({
   params: { locale },
@@ -19,7 +21,7 @@ const AdminMenuPage = async ({
   let fetchedCategories: IFecthedCategory[] | null = null;
 
   try {
-    await dbConnect();
+    await connectDB();
 
     dbProducts = await Product.find().lean();
     if (!dbProducts) return null;
@@ -36,10 +38,8 @@ const AdminMenuPage = async ({
     }
   } catch (error) {
     console.error(error);
-  } /* finally {
-    await dbDisconnect();
-  } */
-
+  } 
+  
   return (
     <>
       <MaxWidthWrapper>

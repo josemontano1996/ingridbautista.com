@@ -1,6 +1,7 @@
 'use client';
+import { cn } from '@/shared/utils/utils';
 import { MouseEvent, ReactNode, useRef, useState } from 'react';
-import { cn } from '@/shared/lib/utils';
+
 
 const XDraggableList = ({
   children,

@@ -1,8 +1,7 @@
-import React from 'react';
 
 import { UpdatePasswordForm } from './UpdatePasswordForm';
 
-export const AdminAccountData = async ({ locale }: { locale: string }) => {
+export const AdminAccountData = async () => {
   return (
     <>
       {/*  <div className="w-[350px] rounded border border-primary px-4 py-8">
