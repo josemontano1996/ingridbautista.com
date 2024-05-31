@@ -3,12 +3,12 @@ import { ZodValidationError } from '../errors/ValidationError';
 
 export const AuthUserDtoSchema = z.object({
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().min(8),
 });
 
-export type TAuthUserDto = z.infer<typeof AuthUserDtoSchema>;
+export type AuthUserDto = z.infer<typeof AuthUserDtoSchema>;
 
-export function createLoginAuthUserDto(data: any): TAuthUserDto {
+export function createLoginAuthUserDto(data: any): AuthUserDto {
   const mappedData = mapLoginAuthUserDto(data);
 
   const result = AuthUserDtoSchema.safeParse(mappedData);
@@ -19,7 +19,7 @@ export function createLoginAuthUserDto(data: any): TAuthUserDto {
   return result.data;
 }
 
-function mapLoginAuthUserDto(data: any): TAuthUserDto {
+function mapLoginAuthUserDto(data: any): AuthUserDto {
   return {
     email: data.email,
     password: data.password,

@@ -3,15 +3,20 @@
 import { z } from 'zod';
 
 import { IActionResponse } from '@/shared/interfaces/IActionResponses';
-import { ISocialData } from '@/shared/interfaces/ISocialData';
-import { socialMediaSchema } from '@/shared/lib/schemas/socialMediaSchema';
+
 import SocialMedia from '@/infrastructure/persistence/models/SocialMedia';
 import { connectDB } from '@/infrastructure/persistence/database-config';
+import {
+  SocialMediaDto,
+  socialMediaDtoSchema,
+} from '@/application/dto/SocialMediaDto';
+import { ServerUpdateSocialMedia } from '@/application/use-cases/server-side/ServerSocialData';
+import { SocialMediaRepository } from '@/infrastructure/persistence/respositories/SocialDataRespository';
 
 export const updateSocialMediaAction = async (
-  values: z.infer<typeof socialMediaSchema>,
+  values: z.infer<typeof socialMediaDtoSchema>,
 ): Promise<IActionResponse> => {
-  const parsed = socialMediaSchema.safeParse(values);
+  const parsed = socialMediaDtoSchema.safeParse(values);
 
   if (!parsed.success) {
     return {
@@ -21,13 +26,11 @@ export const updateSocialMediaAction = async (
   }
 
   try {
-    let socialData: ISocialData = { ...parsed.data };
-    await connectDB();
+    let socialMedia: SocialMediaDto = { ...parsed.data };
 
-    const result = await SocialMedia.findOneAndUpdate(
-      {},
-      { ...socialData },
-      { upsert: true, new: true },
+    const result = await ServerUpdateSocialMedia(
+      { socialMediaRepository: new SocialMediaRepository() },
+      { socialMedia },
     );
 
     if (!result) {

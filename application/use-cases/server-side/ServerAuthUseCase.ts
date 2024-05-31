@@ -1,7 +1,7 @@
 'use server';
 
 import { UserEntity } from '@/domain/entities/UserEntity';
-import { IUserRepository, UserRepository } from '@/infrastructure/persistence/respositories/UserRepository';
+import { UserRepository } from '@/infrastructure/persistence/respositories/UserRepository';
 import { ConsoleError } from '@/application/errors/ConsoleError';
 import { serializeData } from '@/application/utils/serializeData';
 import { createLoginAuthUserDto } from '@/application/dto/AuthUserDto';

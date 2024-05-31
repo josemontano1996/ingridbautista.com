@@ -1,5 +1,5 @@
 import mongoose, { Schema, model, Model } from 'mongoose';
-import { IDbSocialData } from '../db-types';
+import { IDbSocialMedia } from '../db-types';
 
 const socialMediaSchema = new Schema(
   {
@@ -10,8 +10,8 @@ const socialMediaSchema = new Schema(
   { timestamps: true },
 );
 
-const SocialMedia: Model<IDbSocialData> =
+const SocialMedia: Model<IDbSocialMedia> =
   mongoose.models.SocialMedia ||
-  model<IDbSocialData>('SocialMedia', socialMediaSchema);
+  model<IDbSocialMedia>('SocialMedia', socialMediaSchema);
 
 export default SocialMedia;

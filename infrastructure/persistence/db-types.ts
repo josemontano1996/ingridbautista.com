@@ -27,7 +27,7 @@ export interface IDbProductCategory {
   fr: string;
 }
 
-export interface IDbSocialData {
+export interface IDbSocialMedia {
   whatsapp?: string;
   facebook?: string;
   instagram?: string;

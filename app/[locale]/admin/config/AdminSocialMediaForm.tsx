@@ -15,12 +15,11 @@ import {
 import { Input } from '@/presentation/components/ui/input';
 import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
-import { ISocialData } from '@/shared/interfaces/ISocialData';
-import { socialMediaSchema } from '@/shared/lib/schemas/socialMediaSchema';
 import { updateSocialMediaAction } from '@/actions/social-media-actions';
+import { SocialMediaDto, socialMediaDtoSchema } from '@/application/dto/SocialMediaDto';
 
 interface Props {
-  data: ISocialData;
+  data: SocialMediaDto;
 }
 
 export const AdminSocialMediaForm: FC<Props> = ({ data }): JSX.Element => {
@@ -29,8 +28,8 @@ export const AdminSocialMediaForm: FC<Props> = ({ data }): JSX.Element => {
   const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
   const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
 
-  const form = useForm<z.infer<typeof socialMediaSchema>>({
-    resolver: zodResolver(socialMediaSchema),
+  const form = useForm<z.infer<typeof socialMediaDtoSchema>>({
+    resolver: zodResolver(socialMediaDtoSchema),
     defaultValues: {
       facebook: data.facebook,
       instagram: data.instagram,
@@ -38,7 +37,7 @@ export const AdminSocialMediaForm: FC<Props> = ({ data }): JSX.Element => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof socialMediaSchema>) => {
+  const onSubmit = async (values: z.infer<typeof socialMediaDtoSchema>) => {
     clearStatusStore();
     setIsLoadingStatusStore(true);
 

@@ -3,34 +3,27 @@ import { redirect } from 'next/navigation';
 import { AdminAccountData } from '@/app/[locale]/admin/config/AdminAccountData';
 
 import { AdminSocialMediaForm } from './AdminSocialMediaForm';
-import { ISocialData } from '@/shared/interfaces/ISocialData';
-import SocialMedia from '@/infrastructure/persistence/models/SocialMedia';
-import { connectDB } from '@/infrastructure/persistence/database-config';
 import { serializeData } from '@/application/utils/serializeData';
+import { SocialMediaDto } from '@/application/dto/SocialMediaDto';
+import { ServerGetSocialMedia } from '@/application/use-cases/server-side/ServerSocialData';
+import { SocialMediaRepository } from '@/infrastructure/persistence/respositories/SocialDataRespository';
 
-export const revalidate = 0;
 
 const ConfigPage = async ({
   params: { locale },
 }: {
   params: { locale: string };
 }) => {
-  let socialData: ISocialData = {};
+  let socialData: SocialMediaDto = {};
 
   try {
-    await connectDB();
-
-    socialData = (await SocialMedia.findOne().lean()) || {};
-
-    if (!socialData) {
-      throw new Error();
-    }
+    socialData = await ServerGetSocialMedia({
+      socialMediaRepository: new SocialMediaRepository(),
+    });
 
     socialData = serializeData(socialData);
   } catch (error) {
     console.error(error);
-    const errorMessage = encodeURI('Ha ocurrido un error');
-    redirect(`/${locale}/admin/config?error=${errorMessage}`);
   }
 
   return (

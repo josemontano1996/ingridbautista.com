@@ -14,7 +14,7 @@ const LoginPage = async ({ params: { locale } }: Props) => {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    return redirect(`/${locale}/admin`);
+    return redirect(`/${locale}`);
   }
 
   return (

@@ -19,13 +19,7 @@ import { FormButton } from '../../../presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { TLocales } from '@/shared/types/TLocales';
 import { cn } from '@/shared/utils/utils';
-
-const formSchema = z.object({
-  email: z.string().email({ message: 'Please enter a valid email address' }),
-  password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters long' }),
-});
+import { AuthUserDtoSchema } from '@/application/dto/AuthUserDto';
 
 const LogInForm = ({ locale }: { locale: TLocales }) => {
   const router = useRouter();
@@ -34,15 +28,15 @@ const LogInForm = ({ locale }: { locale: TLocales }) => {
   const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
   const setErrorStatusStore = useStatusStore((state) => state.setError);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof AuthUserDtoSchema>>({
+    resolver: zodResolver(AuthUserDtoSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof AuthUserDtoSchema>) => {
     clearStatusStore();
 
     const { email, password } = values;

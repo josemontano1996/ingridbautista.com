@@ -32,7 +32,8 @@ export class UserEntity implements IUserEntity {
 
   async verifyPassword(hashedPassword: string): Promise<boolean> {
     if (!this.password) throw new Error('Password is not set');
-    return await bcrypt.compare(this.password, hashedPassword);
+
+    return await bcrypt.compare(hashedPassword, this.password);
   }
 
   getId(): string | undefined {
