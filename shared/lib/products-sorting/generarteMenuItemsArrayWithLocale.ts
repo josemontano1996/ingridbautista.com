@@ -1,5 +1,6 @@
-import { IDbProduct } from '@/shared/interfaces/IDbProduct';
-import { IMenuItem } from '@/shared/interfaces/IMenuItem';
+import { MenuDto } from '@/application/dto/MenuDto';
+import { ITranslatedProduct } from '@/shared/interfaces/ITranslatedMenu';
+
 import { TLocales } from '@/shared/types/TLocales';
 import { translateAllergens } from '@/shared/utils/translateAllergens';
 
@@ -10,11 +11,11 @@ import { translateAllergens } from '@/shared/utils/translateAllergens';
  * @returns An array of menu items.
  */
 export const genenerateMenuItemsArray = (
-  products: IDbProduct[],
+  products: MenuDto,
   locale: TLocales,
-): IMenuItem[] => {
-  let menuItems: IMenuItem[] = products.map((product) => ({
-    _id: product._id,
+): ITranslatedProduct[] => {
+  let menuItems: ITranslatedProduct[] = products.map((product) => ({
+    id: product.id!,
     name: product[locale].name,
     description: product[locale].description,
     image: product.image,

@@ -1,4 +1,4 @@
-import { IMenuItem } from '@/shared/interfaces/IMenuItem';
+
 
 /**
  * Dynamically sorts an array of products by their type.

@@ -1,14 +1,7 @@
 import AdminMenu from '@/app/[locale]/admin/(menu)/menu/AdminMenu';
-import { connectDB } from '@/infrastructure/persistence/database-config';
-import Product from '@/infrastructure/persistence/models/Product';
-import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
 import LocaleLink from '@/presentation/components/custom/LocaleLink';
 import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
 import { buttonVariants } from '@/presentation/components/ui/button';
-
-import { IDbProduct } from '@/shared/interfaces/IDbProduct';
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-
 import { TLocales } from '@/shared/types/TLocales';
 import { cn } from '@/shared/utils/utils';
 
@@ -16,31 +9,7 @@ const AdminMenuPage = async ({
   params: { locale },
 }: {
   params: { locale: TLocales };
-  }) => {
-  
-  let dbProducts: IDbProduct[] | null = null;
-  let fetchedCategories: IFecthedCategory[] | null = null;
-
-  try {
-    await connectDB();
-
-    dbProducts = await Product.find().lean();
-    if (!dbProducts) return null;
-
-    fetchedCategories = await ProductCategory.find().lean().sort({ order: 1 });
-    if (!fetchedCategories) return null;
-
-    for (const product of dbProducts) {
-      product._id = product._id!.toString();
-    }
-
-    for (const category of fetchedCategories) {
-      category._id = category._id!.toString();
-    }
-  } catch (error) {
-    console.error(error);
-  } 
-  
+}) => {
   return (
     <>
       <MaxWidthWrapper>
@@ -64,11 +33,7 @@ const AdminMenuPage = async ({
           </LocaleLink>
         </div>
       </MaxWidthWrapper>
-      <AdminMenu
-        locale={locale}
-        dbProducts={dbProducts}
-        fetchedCategories={fetchedCategories}
-      />
+      <AdminMenu locale={locale} />
     </>
   );
 };

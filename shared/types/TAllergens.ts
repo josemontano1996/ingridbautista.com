@@ -34,12 +34,12 @@ export const zodAllergenType = z.union([
   z.literal<TAllergen>('moluscos'),
 ]);
 
-type AllergenTranslation = {
+type TAllergenTranslation = {
   [locale in TLocales]: string;
 };
 
 export type TTranslationObjectAllergens = {
-  [allergen in TAllergen]: AllergenTranslation;
+  [allergen in TAllergen]: TAllergenTranslation;
 };
 
 export interface ITranslationDetails {

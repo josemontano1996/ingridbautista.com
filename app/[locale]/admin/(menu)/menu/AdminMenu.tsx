@@ -1,38 +1,42 @@
-import { IDbProduct } from '@/shared/interfaces/IDbProduct';
-import { IMenuItem } from '@/shared/interfaces/IMenuItem';
-
-import { genenerateMenuItemsArray } from '@/shared/lib/products-sorting/generarteMenuItemsArrayWithLocale';
-import { generateTypeOrderedMenu } from '@/shared/lib/products-sorting/generateTypeOrderedMenu';
+'use server';
 
 import XDraggableList from '@/presentation/components/custom/XDraggableList';
-
 import { displayCategoryLocaleName } from '@/shared/lib/products-sorting/displayCategoryLocaleName';
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 
 import { TLocales } from '@/shared/types/TLocales';
 import { AdminMenuItemCard } from './AdminMenuItemCard';
+import { MenuDto } from '@/application/dto/MenuDto';
+import { ProductCategoryDto } from '@/application/dto/ProductCategoryDto';
+import { ServerGetMenu } from '@/application/use-cases/server-side/ServerMenu';
+import { ServerGetProductCategories } from '@/application/use-cases/server-side/ServerProductCategory';
+import { MenuRepository } from '@/infrastructure/persistence/respositories/MenuRepository';
+import { ProductCategoryRepository } from '@/infrastructure/persistence/respositories/ProductCategoryRepository';
+import { TranslatedMenuView } from '@/presentation/classes/TranslatedMenuView';
+import { ITranslatedProduct } from '@/shared/interfaces/ITranslatedMenu';
 
-const AdminMenu = ({
-  locale,
-  dbProducts,
-  fetchedCategories,
-}: {
-  locale: TLocales;
-  dbProducts: IDbProduct[] | null;
-  fetchedCategories: IFecthedCategory[] | null;
-}) => {
-  if (!dbProducts || !fetchedCategories) return null;
+const AdminMenu = async ({ locale }: { locale: TLocales }) => {
+  let menu: MenuDto | null = null;
+  let fetchedCategories: ProductCategoryDto[] | null = null;
 
-  const menuItems = genenerateMenuItemsArray(dbProducts, locale);
+  let translatedMenu: Record<string, ITranslatedProduct[]> = {};
 
-  const orderedByTypeMenu = generateTypeOrderedMenu(
-    menuItems,
-    fetchedCategories,
-  );
+  try {
+    menu = await ServerGetMenu({ menuRepository: new MenuRepository() });
+
+    fetchedCategories = await ServerGetProductCategories({
+      productCategoryRepository: new ProductCategoryRepository(),
+    });
+
+    const menuInstace = new TranslatedMenuView(locale, menu, fetchedCategories);
+
+    translatedMenu = menuInstace.getTranslatedAndSortedMenu();
+  } catch (error) {
+    console.error(error);
+  }
 
   return (
     <section className="ml-[5vw] space-y-8 sm:ml-[3vw]">
-      {Object.entries(orderedByTypeMenu).map(([category, items]) => (
+      {Object.entries(translatedMenu).map(([category, items]) => (
         <div key={category}>
           <h2 className="py-5 text-4xl font-semibold">
             {displayCategoryLocaleName(locale, category, fetchedCategories)
@@ -44,7 +48,7 @@ const AdminMenu = ({
               : null}
           </h2>
           <XDraggableList styling="flex gap-16 overflow-x-hidden">
-            {items.map((item: IMenuItem, i) => (
+            {items.map((item: ITranslatedProduct, i) => (
               <AdminMenuItemCard key={i} item={item} locale={locale} />
             ))}
           </XDraggableList>

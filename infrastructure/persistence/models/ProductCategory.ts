@@ -3,7 +3,7 @@ import { IDbProductCategory } from '../db-types';
 
 const ProductCategorySchema = new Schema({
   name: { type: String, required: true, unique: true },
-  order: { type: Number, required: true },
+  order: { type: Number, required: true, min: 0 },
   en: { type: String, required: true, unique: true },
   fr: { type: String, required: true, unique: true },
 });

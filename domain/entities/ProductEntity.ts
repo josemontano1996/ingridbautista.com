@@ -2,14 +2,27 @@ import { ZodError, z } from 'zod';
 import {
   ITranslationDetails,
   TAllergen,
-  
   zodAllergenType,
 } from '../../shared/types/TAllergens';
 import { ZodValidationError } from '@/application/errors/ValidationError';
+import { ProductDto } from '@/application/dto/ProductDto';
 
-export class ProductEntity {
+export interface IProductEntity {
+  getId(): string | undefined;
+  getImage(): string;
+  getType(): string;
+  getPrice(): number;
+  getPortion(): string | undefined;
+  getAllergens(): TAllergen[] | undefined;
+  getEn(): ITranslationDetails;
+  getEs(): ITranslationDetails;
+  getFr(): ITranslationDetails;
+  toProductDto(): ProductDto;
+}
+
+export class ProductEntity implements IProductEntity {
   constructor(
-    private _id: string | undefined,
+    private id: string | undefined,
     private image: string,
     private type: string,
     private price: number,
@@ -19,7 +32,7 @@ export class ProductEntity {
     private es: ITranslationDetails,
     private fr: ITranslationDetails,
   ) {
-    this._id = _id;
+    this.id = id?.toString();
     this.image = image;
     this.type = type;
     this.price = price;
@@ -32,7 +45,7 @@ export class ProductEntity {
     this.validate();
   }
   getId(): string | undefined {
-    return this._id;
+    return this.id;
   }
 
   getImage(): string {
@@ -65,33 +78,47 @@ export class ProductEntity {
   getFr(): ITranslationDetails {
     return this.fr;
   }
-  private validate() {
-    const entitySchema = z.object({
-      id: z.string().optional(),
-      image: z.string(),
-      type: z.string().optional(),
-      price: z.number().min(0),
-      portion: z.string().optional(),
-      allergens: zodAllergenType.optional(),
-      en: z.object({
-        name: z.string(),
-        description: z.string(),
-      }),
-      es: z.object({
-        name: z.string(),
-        description: z.string(),
-      }),
-      fr: z.object({
-        name: z.string(),
-        description: z.string(),
-      }),
-    });
 
+  toProductDto(): ProductDto {
+    return {
+      id: this.getId(),
+      image: this.getImage(),
+      type: this.getType(),
+      price: this.getPrice(),
+      portion: this.getPortion(),
+      allergens: this.getAllergens(),
+      en: this.getEn(),
+      es: this.getEs(),
+      fr: this.getFr(),
+    };
+  }
+  private validate() {
     try {
-      entitySchema.safeParse(this);
+      productEntitySchema.safeParse(this);
     } catch (e) {
       const error = e as ZodError;
       throw new ZodValidationError(error, 'Validation error');
     }
   }
 }
+
+export const productEntitySchema = z.object({
+  id: z.string().optional(),
+  image: z.string(),
+  type: z.string().optional(),
+  price: z.number().min(0),
+  portion: z.string().optional(),
+  allergens: zodAllergenType.optional(),
+  en: z.object({
+    name: z.string(),
+    description: z.string(),
+  }),
+  es: z.object({
+    name: z.string(),
+    description: z.string(),
+  }),
+  fr: z.object({
+    name: z.string(),
+    description: z.string(),
+  }),
+});
