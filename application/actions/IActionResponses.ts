@@ -1,6 +1,6 @@
-import { IDbCategory, IDbProduct } from '@/infrastructure/persistence/db-types';
-
-import { IUser } from '@/shared/interfaces/IUser';
+import { UserDto } from '../dto/UserDto';
+import { ProductDto } from '../dto/ProductDto';
+import { ProductCategoryDto } from '../dto/ProductCategoryDto';
 
 export interface IActionResponse {
   success: boolean;
@@ -9,12 +9,12 @@ export interface IActionResponse {
 }
 
 export interface ICategoryActionResponse extends IActionResponse {
-  payload?: IDbCategory;
+  payload?: ProductCategoryDto;
 }
 
 export interface IProductActionResponse extends IActionResponse {
-  payload?: IDbProduct;
+  payload?: ProductDto;
 }
 export interface IUserActionResponse extends IActionResponse {
-  payload?: IUser;
+  payload?: UserDto;
 }

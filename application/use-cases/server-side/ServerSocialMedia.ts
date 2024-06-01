@@ -6,8 +6,8 @@ import {
 } from '@/application/dto/SocialMediaDto';
 
 import { CacheService } from '@/infrastructure/caching/CacheService';
-import { SOCIAL_MEDIA_TAG } from '@/infrastructure/caching/cache-tags';
-import { ISocialMediaRepository } from '@/infrastructure/persistence/respositories/SocialDataRespository';
+import { CACHE_SOCIAL_MEDIA_TAG } from '@/infrastructure/caching/cache-tags';
+import { ISocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialDataRespository';
 
 export const ServerGetSocialMedia = async (context: {
   socialMediaRepository: ISocialMediaRepository;
@@ -16,7 +16,7 @@ export const ServerGetSocialMedia = async (context: {
 
   const dbSocialMedia = await CacheService.cacheQuery(
     socialMediaRepository.getSocialMedia,
-    [SOCIAL_MEDIA_TAG],
+    [CACHE_SOCIAL_MEDIA_TAG],
   );
 
   if (!dbSocialMedia) {
@@ -31,7 +31,6 @@ export const ServerUpdateSocialMedia = async (
   },
   data: { socialMedia: SocialMediaDto },
 ): Promise<SocialMediaDto> => {
-    
   const { socialMediaRepository } = context;
   const { socialMedia } = data;
 
@@ -41,7 +40,7 @@ export const ServerUpdateSocialMedia = async (
     throw new Error('Error updating social media');
   }
 
-  CacheService.revalidateCacheTag(SOCIAL_MEDIA_TAG);
+  CacheService.revalidateCacheTag([CACHE_SOCIAL_MEDIA_TAG]);
 
   return mapDbSocialMediaToDto(result);
 };

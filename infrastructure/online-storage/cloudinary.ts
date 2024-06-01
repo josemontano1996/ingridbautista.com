@@ -1,6 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
 
-
 cloudinary.config(process.env.CLOUDINARY_URL ?? '');
 
 export const uploadImageToCloudinary = async (
@@ -28,15 +27,16 @@ export const updateImageFromCloudinary = async (
     .then((r) => r.secure_url);
 };
 
-export const deleteImageFromCloudinary = async (imageUrl: string) => {
+export const deleteImageFromCloudinary = async (
+  imageUrl: string,
+): Promise<any> => {
   const publicId = extractCloudinaryPublicId(imageUrl);
+
   if (!publicId) {
-    return null;
+    throw new Error('Error extracting public id from image url');
   }
 
-  return cloudinary.uploader.destroy(publicId).then((result) => {
-    return result;
-  });
+  return cloudinary.uploader.destroy(publicId);
 };
 
 export const extractCloudinaryPublicId = (imageUrl: string): string => {

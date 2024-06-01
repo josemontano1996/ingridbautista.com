@@ -6,6 +6,7 @@ import { translateAllergens } from '@/shared/utils/translateAllergens';
 
 export interface ITranslatedMenuView {
   getTranslatedAndSortedMenu: () => Record<string, ITranslatedProduct[]>;
+  displayCategoryLocaleName: (category: string) => string | null;
 }
 
 export class TranslatedMenuView implements ITranslatedMenuView {
@@ -33,6 +34,30 @@ export class TranslatedMenuView implements ITranslatedMenuView {
     this.populateCategoriesObjectWithMenuItems();
 
     return this.translatedAndOrderedMenu;
+  };
+
+  public displayCategoryLocaleName = (category: string) => {
+    let translatedCategory = category;
+
+    if (!this.categories) return null;
+
+    switch (this.locale) {
+      case 'es':
+        break;
+      case 'fr':
+        translatedCategory =
+          this.categories.find((cat) => cat.name === category)?.fr ||
+          'Esta categoria no esta activada';
+        break;
+      case 'en':
+        translatedCategory =
+          this.categories.find((cat) => cat.name === category)?.en ||
+          'Esta categoria no esta activada';
+      default:
+        break;
+    }
+
+    return translatedCategory || null;
   };
 
   public static orderCategoriesByOrder = (

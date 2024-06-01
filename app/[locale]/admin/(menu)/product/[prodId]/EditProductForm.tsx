@@ -25,16 +25,7 @@ import { Textarea } from '@/presentation/components/ui/textarea';
 import { Checkbox } from '@/presentation/components/ui/checkbox';
 
 import { allergensArray } from '@/shared/consts/allergens';
-import { capitalize } from '@/shared/utils/capitalize';
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import { FormButton } from '@/presentation/components/custom/FormButton';
-import { updateProductAction } from '@/application/actions/product-actions';
-import { imageToBase64String } from '@/shared/utils/imageToBase64String';
-import { useStatusStore } from '@/presentation/state-management/statusStore';
-import { IDbProduct } from '@/shared/interfaces/IDbProduct';
-import { updateProductFormSchema } from '@/shared/lib/schemas/productFormSchemas';
-import { useParams, useRouter } from 'next/navigation';
-import { isFile } from '@/shared/utils/isFile';
+
 
 const EditProductForm = ({
   product,
@@ -45,7 +36,7 @@ const EditProductForm = ({
 }) => {
   const router = useRouter();
   const { locale } = useParams();
-  const { image, _id, allergens, portion, type, price, es, en, fr } = product;
+  const { image, id, allergens, portion, type, price, es, en, fr } = product;
   const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
   const setErrorStatusStore = useStatusStore((state) => state.setError);
   const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
@@ -54,9 +45,10 @@ const EditProductForm = ({
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(
     image,
   );
-  const form = useForm<z.infer<typeof updateProductFormSchema>>({
-    resolver: zodResolver(updateProductFormSchema),
+  const form = useForm<z.infer<typeof productDtoSchema>>({
+    resolver: zodResolver(productDtoSchema),
     defaultValues: {
+      id: id,
       image: undefined,
       type: type,
       price: price,
@@ -89,7 +81,7 @@ const EditProductForm = ({
     };
   };
 
-  const onSubmit = async (values: z.infer<typeof updateProductFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof productDtoSchema>) => {
     clearStatusStore();
     setPreviewImage('');
     setIsLoadingStatusStore(true);
@@ -104,10 +96,7 @@ const EditProductForm = ({
       values.image = image;
     }
 
-    const { success, message } = await updateProductAction(
-      values,
-      _id as string,
-    );
+    const { success, message } = await updateProductAction(values);
 
     if (!success) {
       return setErrorStatusStore(message ? message : 'Error al crear producto');
@@ -359,6 +348,18 @@ const EditProductForm = ({
                   </FormLabel>
                   <FormControl>
                     <Textarea {...field} className="text-lg" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="hidden" value={id} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

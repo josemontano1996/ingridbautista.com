@@ -2,8 +2,6 @@
 
 import { useTranslation } from 'react-i18next';
 import { capitalize } from '@/shared/utils/capitalize';
-import { TLocales } from '@/shared/types/TLocales';
-import { IMenuItem } from '@/shared/interfaces/IMenuItem';
 import {
   Dialog,
   DialogContent,
@@ -16,14 +14,9 @@ import {
 import { buttonVariants } from '@/presentation/components/ui/button';
 import CardImage from './CardImage';
 import { cn } from '@/shared/utils/utils';
+import { ITranslatedProduct } from '@/shared/interfaces/ITranslatedMenu';
 
-export const MenuItemInfoDialog = ({
-  locale,
-  item,
-}: {
-  locale: TLocales;
-  item: IMenuItem;
-}) => {
+export const MenuItemInfoDialog = ({ item }: { item: ITranslatedProduct }) => {
   const { t } = useTranslation();
 
   return (

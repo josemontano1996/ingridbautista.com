@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Cormorant } from 'next/font/google';
 import { dir } from 'i18next';
 
-import i18nConfig from '@/i18nConfig';
 import '../globals.css';
 import { Footer } from '@/presentation/components/custom/Footer';
 
@@ -13,6 +12,7 @@ import { Suspense } from 'react';
 import TranslationsProvider from '@/presentation/components/providers/TranslationsProvider';
 import { cn } from '@/shared/utils/utils';
 import initTranslations from '@/infrastructure/i18n/i18n';
+import i18nConfig from '@/infrastructure/i18n/i18nConfig';
 
 const cormorant = Cormorant({ subsets: ['latin'] });
 

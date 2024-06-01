@@ -1,6 +1,5 @@
 'use client';
 
-import { IMenuItem } from '@/shared/interfaces/IMenuItem';
 import {
   Card,
   CardHeader,
@@ -15,13 +14,14 @@ import { capitalize } from '@/shared/utils/capitalize';
 import CardImage from '@/presentation/components/custom/CardImage';
 import { TLocales } from '@/shared/types/TLocales';
 import { cn } from '@/shared/utils/utils';
+import { ITranslatedProduct } from '@/shared/interfaces/ITranslatedMenu';
 
 export const AdminMenuItemCard = ({
   locale,
   item,
 }: {
   locale: TLocales;
-  item: IMenuItem;
+  item: ITranslatedProduct;
 }) => {
   return (
     <li>

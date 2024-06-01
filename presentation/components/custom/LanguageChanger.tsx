@@ -1,9 +1,10 @@
 'use client';
 
+import i18nConfig from '@/infrastructure/i18n/i18nConfig';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import i18nConfig from '@/i18nConfig';
+
 
 
 /**

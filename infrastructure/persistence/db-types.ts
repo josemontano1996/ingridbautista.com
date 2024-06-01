@@ -1,5 +1,11 @@
+import { UpdateWriteOpResult } from 'mongoose';
 import { TAllergen } from '@/shared/types/TAllergens';
 import { TUserRole } from '@/shared/types/TUserRole';
+import { DeleteResult } from 'mongodb';
+
+export interface DbUpdateResult extends UpdateWriteOpResult {
+}
+export interface DbDeleteResult extends DeleteResult {}
 
 export interface IDbProduct {
   image: string;

@@ -3,7 +3,7 @@
 import { updatePasswordDto } from '@/application/dto/UserDto';
 import { UserEntity } from '@/domain/entities/UserEntity';
 import { getAuthSession } from '@/infrastructure/authentication/getAuthSession';
-import { IUserRepository } from '@/infrastructure/persistence/respositories/UserRepository';
+import { IUserRepository } from '@/infrastructure/persistence/repositories/UserRepository';
 
 export const ServerUpdateUserPassword = async (
   context: {
@@ -11,7 +11,6 @@ export const ServerUpdateUserPassword = async (
   },
   data: { passwords: updatePasswordDto },
 ): Promise<boolean> => {
-  
   const { user } = await getAuthSession();
 
   if (!user) {

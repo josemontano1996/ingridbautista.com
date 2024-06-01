@@ -4,7 +4,7 @@ import { AdminSocialMediaForm } from './AdminSocialMediaForm';
 import { serializeData } from '@/application/utils/serializeData';
 import { SocialMediaDto } from '@/application/dto/SocialMediaDto';
 import { ServerGetSocialMedia } from '@/application/use-cases/server-side/ServerSocialMedia';
-import { SocialMediaRepository } from '@/infrastructure/persistence/respositories/SocialDataRespository';
+import { SocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialDataRespository';
 
 const ConfigPage = async ({
   params: { locale },

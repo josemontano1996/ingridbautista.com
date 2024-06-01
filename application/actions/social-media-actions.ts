@@ -2,14 +2,13 @@
 
 import { z } from 'zod';
 
-import { IActionResponse } from '@/shared/interfaces/IActionResponses';
-
 import {
   SocialMediaDto,
   socialMediaDtoSchema,
 } from '@/application/dto/SocialMediaDto';
 import { ServerUpdateSocialMedia } from '@/application/use-cases/server-side/ServerSocialMedia';
-import { SocialMediaRepository } from '@/infrastructure/persistence/respositories/SocialDataRespository';
+import { SocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialDataRespository';
+import { IActionResponse } from './IActionResponses';
 
 export const updateSocialMediaAction = async (
   values: z.infer<typeof socialMediaDtoSchema>,

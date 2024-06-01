@@ -6,7 +6,7 @@ import { serializeData } from '../utils/serializeData';
 export const productDtoSchema = z.object({
   id: z.string().optional(),
   image: z.string(),
-  type: z.string().optional(),
+  type: z.string(),
   price: z.number().min(0),
   portion: z.string().optional(),
   allergens: z.array(zodAllergenType).optional(),
@@ -46,6 +46,28 @@ export const mapDbProductToDto = (data: IDbProduct): ProductDto => {
     fr: {
       name: sD.fr.name,
       description: sD.fr.description,
+    },
+  };
+};
+export const mapProductDtoToDb = (data: ProductDto): IDbProduct => {
+  return {
+    _id: data.id,
+    image: data.image,
+    type: data.type,
+    price: data.price,
+    portion: data.portion,
+    allergens: data.allergens,
+    en: {
+      name: data.en.name,
+      description: data.en.description,
+    },
+    es: {
+      name: data.es.name,
+      description: data.es.description,
+    },
+    fr: {
+      name: data.fr.name,
+      description: data.fr.description,
     },
   };
 };

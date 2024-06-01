@@ -13,7 +13,9 @@ export class CacheService {
     return cachedData();
   }
 
-  public static revalidateCacheTag(tag: string): void {
-    revalidateTag(tag);
+  public static revalidateCacheTag(tags: string[]): void {
+    for (const tag of tags) {
+      revalidateTag(tag);
+    }
   }
 }

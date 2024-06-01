@@ -1,7 +1,7 @@
 'use server';
 
 import { mapDbProductCategoryListToDto } from '@/application/dto/ProductCategoryDto';
-import { IProductCategoryRepository } from '@/infrastructure/persistence/respositories/ProductCategoryRepository';
+import { IProductCategoryRepository } from '@/infrastructure/persistence/repositories/ProductCategoryRepository';
 
 export const ServerGetProductCategories = async (context: {
   productCategoryRepository: IProductCategoryRepository;
