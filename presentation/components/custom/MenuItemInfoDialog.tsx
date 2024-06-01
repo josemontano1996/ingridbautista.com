@@ -1,5 +1,6 @@
-import initTranslations from '@/infrastructure/i18n/i18n';
+'use client';
 
+import { useTranslation } from 'react-i18next';
 import { capitalize } from '@/shared/utils/capitalize';
 import { TLocales } from '@/shared/types/TLocales';
 import { IMenuItem } from '@/shared/interfaces/IMenuItem';
@@ -16,14 +17,14 @@ import { buttonVariants } from '@/presentation/components/ui/button';
 import CardImage from './CardImage';
 import { cn } from '@/shared/utils/utils';
 
-export const MenuItemInfoDialog = async ({
+export const MenuItemInfoDialog = ({
   locale,
   item,
 }: {
   locale: TLocales;
   item: IMenuItem;
 }) => {
-  const { t } = await initTranslations(locale, ['menu-page']);
+  const { t } = useTranslation();
 
   return (
     <Dialog>

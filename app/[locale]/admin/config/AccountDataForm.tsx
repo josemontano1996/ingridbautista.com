@@ -38,7 +38,7 @@ export const AccountDataForm: FC<Props> = ({ user }): JSX.Element => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof userFormSchema>) => {
+  const onSubmit = (values: z.infer<typeof userFormSchema>) => {
     clearStatusStore();
     setIsLoadingStatusStore(true);
 
