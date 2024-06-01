@@ -1,6 +1,6 @@
-import { IDbProduct } from './IDbProduct';
-import { IFecthedCategory } from './IFetchedCategory';
-import { IUser } from './IUser';
+import { IDbCategory, IDbProduct } from '@/infrastructure/persistence/db-types';
+
+import { IUser } from '@/shared/interfaces/IUser';
 
 export interface IActionResponse {
   success: boolean;
@@ -9,7 +9,7 @@ export interface IActionResponse {
 }
 
 export interface ICategoryActionResponse extends IActionResponse {
-  payload?: IFecthedCategory;
+  payload?: IDbCategory;
 }
 
 export interface IProductActionResponse extends IActionResponse {
@@ -18,4 +18,3 @@ export interface IProductActionResponse extends IActionResponse {
 export interface IUserActionResponse extends IActionResponse {
   payload?: IUser;
 }
-

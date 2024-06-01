@@ -43,3 +43,12 @@ export interface IDbUser {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface IDbCategory {
+  name: string;
+  order: number;
+  en: string;
+  fr: string;
+
+  _id?: string;
+}
