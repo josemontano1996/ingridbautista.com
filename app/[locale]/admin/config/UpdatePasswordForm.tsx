@@ -14,7 +14,7 @@ import {
 import { Input } from '@/presentation/components/ui/input';
 import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
-import { updatePasswordUserAction } from '@/actions/user-actions';
+import { updatePasswordUserAction } from '@/application/actions/user-actions';
 import { updatePasswordDtoSchema } from '@/application/dto/UserDto';
 
 export const UpdatePasswordForm: FC = (): JSX.Element => {

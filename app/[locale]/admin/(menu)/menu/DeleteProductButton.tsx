@@ -1,5 +1,5 @@
 import { useStatusStore } from '@/presentation/state-management/statusStore';
-import { deleteProductAction } from '@/actions/product-actions';
+import { deleteProductAction } from '@/application/actions/product-actions';
 import { Button } from '@/presentation/components/ui/button';
 
 import { useRouter } from 'next/navigation';

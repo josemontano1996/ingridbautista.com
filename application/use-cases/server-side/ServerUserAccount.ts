@@ -11,6 +11,7 @@ export const ServerUpdateUserPassword = async (
   },
   data: { passwords: updatePasswordDto },
 ): Promise<boolean> => {
+  
   const { user } = await getAuthSession();
 
   if (!user) {

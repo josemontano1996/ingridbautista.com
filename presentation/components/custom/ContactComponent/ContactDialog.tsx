@@ -31,7 +31,7 @@ import Instagram from '../icon-components/InstagramComponent';
 import Gmail from '../icon-components/GmailComponent';
 import { ISocialData } from '@/shared/interfaces/ISocialData';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
-import { sendEmailAction } from '@/actions/email-actions';
+import { sendEmailAction } from '@/application/actions/email-actions';
 import { contactFormSchema } from '@/shared/lib/schemas/contactFormSchema';
 import { Textarea } from '@/presentation/components/ui/textarea';
 import { cn } from '@/shared/utils/utils';

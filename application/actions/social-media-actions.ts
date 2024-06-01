@@ -4,8 +4,6 @@ import { z } from 'zod';
 
 import { IActionResponse } from '@/shared/interfaces/IActionResponses';
 
-import SocialMedia from '@/infrastructure/persistence/models/SocialMedia';
-import { connectDB } from '@/infrastructure/persistence/database-config';
 import {
   SocialMediaDto,
   socialMediaDtoSchema,

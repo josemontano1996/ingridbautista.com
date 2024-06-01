@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { IUserActionResponse } from '@/shared/interfaces/IActionResponses';
 import { updatePasswordDtoSchema } from '@/application/dto/UserDto';
-import { UserRepository } from '../infrastructure/persistence/respositories/UserRepository';
+import { UserRepository } from '../../infrastructure/persistence/respositories/UserRepository';
 import { ServerUpdateUserPassword } from '@/application/use-cases/server-side/ServerUserAccount';
 
 export const updatePasswordUserAction = async (

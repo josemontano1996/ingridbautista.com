@@ -15,7 +15,7 @@ import {
 } from '@/presentation/components/ui/form';
 import { Input } from '@/presentation/components/ui/input';
 import { categoryFormSchema } from '@/shared/lib/schemas/categoryFormSchema';
-import { createCategoryAction } from '@/actions/category-actions';
+import { createCategoryAction } from '@/application/actions/category-actions';
 import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { useStatusStore } from '@/presentation/state-management/statusStore';

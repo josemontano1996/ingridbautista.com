@@ -15,8 +15,11 @@ import {
 import { Input } from '@/presentation/components/ui/input';
 import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
-import { updateSocialMediaAction } from '@/actions/social-media-actions';
-import { SocialMediaDto, socialMediaDtoSchema } from '@/application/dto/SocialMediaDto';
+import { updateSocialMediaAction } from '@/application/actions/social-media-actions';
+import {
+  SocialMediaDto,
+  socialMediaDtoSchema,
+} from '@/application/dto/SocialMediaDto';
 
 interface Props {
   data: SocialMediaDto;

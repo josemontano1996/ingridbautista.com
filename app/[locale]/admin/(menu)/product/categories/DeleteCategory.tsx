@@ -8,7 +8,7 @@ import { TableCell } from '@/presentation/components/ui/table';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { deleteCategoryAction } from '@/actions/category-actions';
+import { deleteCategoryAction } from '@/application/actions/category-actions';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 

@@ -22,7 +22,7 @@ import {
   FormMessage,
 } from '@/presentation/components/ui/form';
 import { FormButton } from '@/presentation/components/custom/FormButton';
-import { updateCategoryAction } from '@/actions/category-actions';
+import { updateCategoryAction } from '@/application/actions/category-actions';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 

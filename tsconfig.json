@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "i18nConfig.js",
     "presentation/components/custom/ui-elements",
-    "actions/product-category-actions",
+    "application/actions/product-category-actions",
     "presentation/components/custom/NavBar"
   ],
   "exclude": ["node_modules"]

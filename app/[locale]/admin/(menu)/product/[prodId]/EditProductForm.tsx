@@ -28,7 +28,7 @@ import { allergensArray } from '@/shared/consts/allergens';
 import { capitalize } from '@/shared/utils/capitalize';
 import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 import { FormButton } from '@/presentation/components/custom/FormButton';
-import { updateProductAction } from '@/actions/product-actions';
+import { updateProductAction } from '@/application/actions/product-actions';
 import { imageToBase64String } from '@/shared/utils/imageToBase64String';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { IDbProduct } from '@/shared/interfaces/IDbProduct';
