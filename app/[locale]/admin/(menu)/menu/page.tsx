@@ -16,7 +16,8 @@ const AdminMenuPage = async ({
   params: { locale },
 }: {
   params: { locale: TLocales };
-}) => {
+  }) => {
+  
   let dbProducts: IDbProduct[] | null = null;
   let fetchedCategories: IFecthedCategory[] | null = null;
 
