@@ -1,20 +1,20 @@
+import { ProductCategoryDto } from '@/application/dto/ProductCategoryDto';
+
 import { create } from 'zustand';
 
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-
 type TCategoryStore = {
-  categories: IFecthedCategory[] | null;
-  setCategories: (cat?: IFecthedCategory[] | null) => void;
-  appendCategory: (cat: IFecthedCategory) => void;
-  updateCategories: (cat: IFecthedCategory) => void;
+  categories: ProductCategoryDto[] | null;
+  setCategories: (cat?: ProductCategoryDto[] | null) => void;
+  appendCategory: (cat: ProductCategoryDto) => void;
+  updateCategories: (cat: ProductCategoryDto) => void;
   deleteCategory: (categoryName: string) => void;
 };
 
 export const useCategoryStore = create<TCategoryStore>((set) => ({
   categories: [],
-  setCategories: (cat?: IFecthedCategory[] | null) =>
+  setCategories: (cat?: ProductCategoryDto[] | null) =>
     set((state) => ({ ...state, categories: cat })),
-  appendCategory: (cat: IFecthedCategory) =>
+  appendCategory: (cat: ProductCategoryDto) =>
     set((state) => {
       const newCategories = state.categories
         ? [...state.categories, cat]
@@ -24,10 +24,10 @@ export const useCategoryStore = create<TCategoryStore>((set) => ({
         categories: newCategories.sort((a, b) => a.order - b.order),
       };
     }),
-  updateCategories: (cat: IFecthedCategory) =>
+  updateCategories: (cat: ProductCategoryDto) =>
     set((state) => {
       const updatedCategories = state.categories?.map((category) => {
-        if (category._id === cat._id) {
+        if (category.id === cat.id) {
           return cat;
         }
         return category;

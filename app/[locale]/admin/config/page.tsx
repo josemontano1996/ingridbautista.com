@@ -1,8 +1,5 @@
 import { AdminAccountData } from '@/app/[locale]/admin/config/AdminAccountData';
-
 import { AdminSocialMediaForm } from './AdminSocialMediaForm';
-import { serializeData } from '@/application/utils/serializeData';
-import { SocialMediaDto } from '@/application/dto/SocialMediaDto';
 import { ServerGetSocialMedia } from '@/application/use-cases/server-side/ServerSocialMedia';
 import { SocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialDataRespository';
 
@@ -11,17 +8,9 @@ const ConfigPage = async ({
 }: {
   params: { locale: string };
 }) => {
-  let socialData: SocialMediaDto = {};
-
-  try {
-    socialData = await ServerGetSocialMedia({
-      socialMediaRepository: new SocialMediaRepository(),
-    });
-
-    socialData = serializeData(socialData);
-  } catch (error) {
-    console.error(error);
-  }
+  const socialData = await ServerGetSocialMedia({
+    socialMediaRepository: new SocialMediaRepository(),
+  });
 
   return (
     <>

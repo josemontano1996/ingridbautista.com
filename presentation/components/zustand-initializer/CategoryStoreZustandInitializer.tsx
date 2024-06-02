@@ -1,11 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
+import { IDbCategory } from '@/infrastructure/persistence/db-types';
 
 interface Props {
-  fetchedCategories: IFecthedCategory[] | null;
+  fetchedCategories: IDbCategory[] | null;
 }
 
 export const CategoryStoreZustandInitializer = ({

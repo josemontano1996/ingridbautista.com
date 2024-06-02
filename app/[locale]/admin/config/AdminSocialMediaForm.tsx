@@ -25,7 +25,10 @@ interface Props {
   data: SocialMediaDto;
 }
 
-export const AdminSocialMediaForm: FC<Props> = ({ data }): JSX.Element => {
+export const AdminSocialMediaForm = ({ data }: Props) => {
+  if (!data) {
+    data = { facebook: '', instagram: '', whatsapp: '' };
+  }
   const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
   const setErrorStatusStore = useStatusStore((state) => state.setError);
   const clearStatusStore = useStatusStore((state) => state.clearStatusStore);

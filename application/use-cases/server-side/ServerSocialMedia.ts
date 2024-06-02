@@ -22,14 +22,14 @@ export const ServerGetSocialMedia = async (context: {
     );
 
     if (!dbSocialMedia) {
-      return {};
+      throw new Error('Social media not found');
     }
 
     return mapDbSocialMediaToDto(dbSocialMedia);
   } catch (error) {
     const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
-    throw new Error('Error getting social media');
+    return {};
   }
 };
 
@@ -56,6 +56,6 @@ export const ServerUpdateSocialMedia = async (
     const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
 
-    throw new Error('Error getting social media');
+    return {};
   }
 };

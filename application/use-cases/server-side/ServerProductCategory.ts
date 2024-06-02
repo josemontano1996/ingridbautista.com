@@ -1,25 +1,34 @@
 'use server';
 
-import { mapDbProductCategoryListToDto } from '@/application/dto/ProductCategoryDto';
+import {
+  ProductCategoryDto,
+  mapDbProductCategoryListToDto,
+} from '@/application/dto/ProductCategoryDto';
 import { ServerErrorHandler } from '@/application/errors/Errors';
 import { IProductCategoryRepository } from '@/infrastructure/persistence/repositories/ProductCategoryRepository';
 
-export const ServerGetProductCategories = async (context: {
+export type IServerGetProductCategories = (context: {
   productCategoryRepository: IProductCategoryRepository;
-}) => {
-  try {
-    const { productCategoryRepository } = context;
+}) => Promise<ProductCategoryDto[]>;
 
-    const dbCategories = await productCategoryRepository.getCategories();
+export const ServerGetProductCategories: IServerGetProductCategories =
+  async (context: {
+    productCategoryRepository: IProductCategoryRepository;
+  }): Promise<ProductCategoryDto[]> => {
+    try {
+      const { productCategoryRepository } = context;
 
-    if (!dbCategories) {
+      const dbCategories = await productCategoryRepository.getCategories();
+
+      if (!dbCategories) {
+        throw new Error('Categories not found');
+      }
+
+      return mapDbProductCategoryListToDto(dbCategories);
+    } catch (error) {
+      const errorInstance = new ServerErrorHandler(error);
+      errorInstance.logError();
+
       return [];
     }
-
-    return mapDbProductCategoryListToDto(dbCategories);
-  } catch (error) {
-    const errorInstance = new ServerErrorHandler(error);
-    errorInstance.logError();
-    throw new Error('Error getting product categories');
-  }
-};
+  };
