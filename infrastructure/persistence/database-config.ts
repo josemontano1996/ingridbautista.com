@@ -1,3 +1,4 @@
+import { DatabaseConnectionError } from '@/application/errors/Errors';
 import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGO_URL!;
@@ -13,7 +14,6 @@ export async function connectDB() {
     const conn = await mongoose.connect(MONGODB_URI);
     return conn;
   } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-    throw error;
+    throw new DatabaseConnectionError(error as Error);
   }
 }
