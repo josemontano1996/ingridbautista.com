@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { ZodValidationError } from '../errors/f';
+import { ZodValidationError } from '../errors/Errors';
+
 
 export const AuthUserDtoSchema = z.object({
   email: z.string().email(),

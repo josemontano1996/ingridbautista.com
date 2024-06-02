@@ -4,8 +4,8 @@ import {
   TAllergen,
   zodAllergenType,
 } from '../../shared/types/TAllergens';
-import { ZodValidationError } from '@/application/errors/ValidationError';
 import { ProductDto } from '@/application/dto/ProductDto';
+import { ZodValidationError } from '@/application/errors/Errors';
 
 export interface IProductEntity {
   getId(): string | undefined;

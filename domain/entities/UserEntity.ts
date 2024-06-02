@@ -1,9 +1,9 @@
 import bcrypt from 'bcryptjs';
 import { ZodError, z } from 'zod';
-import { ZodValidationError } from '@/application/errors/ValidationError';
 import { TUserRole, zodUserRoleType } from '@/shared/types/TUserRole';
 import { UserDto } from '@/application/dto/UserDto';
 import { hashStringSync } from '@/shared/utils/hashString';
+import { ZodValidationError } from '@/application/errors/Errors';
 
 export interface IUserEntity {
   getId(): string | undefined;

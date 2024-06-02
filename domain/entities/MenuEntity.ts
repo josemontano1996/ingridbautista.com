@@ -1,7 +1,7 @@
 import { ZodError, z } from 'zod';
 import { ProductEntity, productEntitySchema } from './ProductEntity';
-import { ZodValidationError } from '@/application/errors/ValidationError';
 import { ProductDto } from '@/application/dto/ProductDto';
+import { ZodValidationError } from '@/application/errors/Errors';
 
 export interface IMenuEntity {
   getProductArray(): ProductEntity[];
