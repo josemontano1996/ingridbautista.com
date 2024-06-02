@@ -1,6 +1,7 @@
 'use server';
 
 import { ProductDto, mapProductDtoToDb } from '@/application/dto/ProductDto';
+import { ServerError } from '@/application/errors/Errors';
 import { CacheService } from '@/infrastructure/caching/CacheService';
 import { CACHE_PRODUCTS_TAG } from '@/infrastructure/caching/cache-tags';
 import {
@@ -8,7 +9,6 @@ import {
   updateImageFromCloudinary,
   uploadImageToCloudinary,
 } from '@/infrastructure/online-storage/cloudinary';
-import Product from '@/infrastructure/persistence/models/Product';
 import { IProductRepository } from '@/infrastructure/persistence/repositories/ProductRepository';
 
 export const ServerCreateProduct = async (
@@ -43,11 +43,12 @@ export const ServerCreateProduct = async (
 
     return true;
   } catch (error) {
-    console.error(error);
-
     if (imageUrl) {
       await deleteImageFromCloudinary(imageUrl);
     }
+
+    const errorInstance = new ServerError(error);
+    errorInstance.logError();
 
     throw new Error('Error creating product');
   }
@@ -61,32 +62,41 @@ export const ServerUpdateProduct = async (
     product: ProductDto;
   },
 ): Promise<boolean> => {
-  const { productRepository } = context;
-  const { product } = data;
+  try {
+    const { productRepository } = context;
+    const { product } = data;
 
-  const oldProduct = await productRepository.getProduct(product.id!);
+    const oldProduct = await productRepository.getProduct(product.id!);
 
-  if (!oldProduct) {
-    throw new Error('Product not found');
-  }
+    if (!oldProduct) {
+      throw new Error('Product not found');
+    }
 
-  let imageUrl = oldProduct.image;
+    let imageUrl = oldProduct.image;
 
-  if (product.image && product.image !== oldProduct.image) {
-    imageUrl = await updateImageFromCloudinary(product.image, oldProduct.image);
-  }
+    if (product.image && product.image !== oldProduct.image) {
+      imageUrl = await updateImageFromCloudinary(
+        product.image,
+        oldProduct.image,
+      );
+    }
 
-  const updatedProduct = { ...product, image: imageUrl };
+    const updatedProduct = { ...product, image: imageUrl };
 
-  const result = await productRepository.updateProduct(updatedProduct);
+    const result = await productRepository.updateProduct(updatedProduct);
 
-  if (!result) {
+    if (!result) {
+      throw new Error('Error updating product');
+    }
+
+    CacheService.revalidateCacheTag([CACHE_PRODUCTS_TAG]);
+
+    return true;
+  } catch (error) {
+    const errorInstance = new ServerError(error);
+    errorInstance.logError();
     throw new Error('Error updating product');
   }
-
-  CacheService.revalidateCacheTag([CACHE_PRODUCTS_TAG]);
-
-  return true;
 };
 
 export const ServerDeleteProduct = async (
@@ -98,29 +108,35 @@ export const ServerDeleteProduct = async (
     imageUrl: string;
   },
 ): Promise<boolean> => {
-  const { productRepository } = context;
-  const { prodId, imageUrl } = data;
+  try {
+    const { productRepository } = context;
+    const { prodId, imageUrl } = data;
 
-  if (!prodId) {
-    throw new Error('Invalid or missing product id');
-  }
-
-  //Deleting image from cloudinary
-  if (imageUrl) {
-    const successDeletingImage = await deleteImageFromCloudinary(imageUrl);
-
-    if (!successDeletingImage) {
-      throw new Error('Error deleting cloudinary image');
+    if (!prodId) {
+      throw new Error('Invalid or missing product id');
     }
+
+    //Deleting image from cloudinary
+    if (imageUrl) {
+      const successDeletingImage = await deleteImageFromCloudinary(imageUrl);
+
+      if (!successDeletingImage) {
+        throw new Error('Error deleting cloudinary image');
+      }
+    }
+
+    const result = await productRepository.deleteProduct(prodId);
+
+    if (!result) {
+      throw new Error('Error deleting product');
+    }
+
+    CacheService.revalidateCacheTag([CACHE_PRODUCTS_TAG]);
+
+    return true;
+  } catch (error) {
+    const errorInstance = new ServerError(error);
+    errorInstance.logError();
+    throw new Error('Error updating product');
   }
-
-  const result = await productRepository.deleteProduct(prodId);
-
-  if (!result) {
-    throw new Error('Error deleting product');
-  }
-
-  CacheService.revalidateCacheTag([CACHE_PRODUCTS_TAG]);
-
-  return true;
 };

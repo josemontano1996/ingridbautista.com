@@ -4,7 +4,7 @@ import { Error } from 'mongoose';
 import { ZodError } from 'zod';
 
 export class ServerError {
-  constructor(private error: Error) {
+  constructor(private error: any) {
     if (typeof window !== 'undefined') {
       throw new Error('Server error can not be logged to client.');
     }

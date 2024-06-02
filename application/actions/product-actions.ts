@@ -29,15 +29,16 @@ export const createProductAction = async (
     );
 
     if (!result) {
-      throw new Error('Error creating product');
+      return {
+        success: false,
+        message: 'Error creating product',
+      };
     }
 
     return {
       success: true,
     };
   } catch (error) {
-    console.error(error);
-
     return {
       success: false,
       message: 'Error creating category, try again later.',
@@ -64,15 +65,16 @@ export const updateProductAction = async (
     );
 
     if (!result) {
-      throw new Error('Error updating product');
+      return {
+        success: false,
+        message: 'Error updating product',
+      };
     }
 
     return {
       success: true,
     };
   } catch (e) {
-    console.error(e);
-
     return {
       success: false,
       message: 'Error updating product, try again later.',
@@ -91,15 +93,16 @@ export const deleteProductAction = async (
     );
 
     if (!result) {
-      throw new Error('Error deleting product');
+      return {
+        success: false,
+        message: 'Error deleting product',
+      };
     }
 
     return {
       success: true,
     };
   } catch (error) {
-    console.error(error);
-
     return {
       success: false,
       message: 'Error deleting product',

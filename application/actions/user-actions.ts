@@ -1,10 +1,11 @@
 'use server';
 
 import { z } from 'zod';
-import { IUserActionResponse } from '@/shared/interfaces/IActionResponses';
+
 import { updatePasswordDtoSchema } from '@/application/dto/UserDto';
 import { UserRepository } from '../../infrastructure/persistence/repositories/UserRepository';
 import { ServerUpdateUserPassword } from '@/application/use-cases/server-side/ServerUserAccount';
+import { IUserActionResponse } from './IActionResponses';
 
 export const updatePasswordUserAction = async (
   values: z.infer<typeof updatePasswordDtoSchema>,
@@ -32,7 +33,6 @@ export const updatePasswordUserAction = async (
       message: 'Constraseña actualizada con éxito',
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       message: 'Error al actualizar contraseña',

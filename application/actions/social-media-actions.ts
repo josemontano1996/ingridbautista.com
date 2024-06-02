@@ -31,7 +31,10 @@ export const updateSocialMediaAction = async (
     );
 
     if (!result) {
-      throw new Error(result);
+      return {
+        success: false,
+        message: 'Error al actualizar datos',
+      };
     }
 
     return {
@@ -39,8 +42,6 @@ export const updateSocialMediaAction = async (
       message: 'Datos actualizados correctamente',
     };
   } catch (error) {
-    console.error(error);
-
     return {
       success: false,
       message: 'Ha ocurrido un error',
