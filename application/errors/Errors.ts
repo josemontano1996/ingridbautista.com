@@ -9,10 +9,10 @@ export interface IErrorHandler {
 }
 
 /**
- * Represents a server error, only works in the server.
+ * Server error handler, only works in the server.
  * Implements the IErrorHandler interface.
  */
-export class ServerError implements IErrorHandler {
+export class ServerErrorHandler implements IErrorHandler {
   /**
    * Creates a new instance of the ServerError class.
    * @param error - The error object.
@@ -34,12 +34,15 @@ export class ServerError implements IErrorHandler {
 }
 
 /**
- * Represents a client error.
+ * Client error handler, only works in the client.
  * Implements the IErrorHandler interface.
  */
 
-export class ClientError implements IErrorHandler {
+export class ClientErrorHandler implements IErrorHandler {
   constructor(private message: string) {
+    if (typeof window === 'undefined') {
+      throw new Error('Client error can not be logged to server.');
+    }
     this.message = message;
   }
   public logError() {

@@ -1,7 +1,7 @@
 'use server';
 
 import { mapDbMenutoDto } from '@/application/dto/MenuDto';
-import { ServerError } from '@/application/errors/Errors';
+import { ServerErrorHandler } from '@/application/errors/Errors';
 import { IMenuRepository } from '@/infrastructure/persistence/repositories/MenuRepository';
 
 export const ServerGetMenu = async (context: {
@@ -18,7 +18,7 @@ export const ServerGetMenu = async (context: {
 
     return mapDbMenutoDto(dbMenu);
   } catch (error) {
-    const errorInstance = new ServerError(error);
+    const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
     throw new Error('Error getting menu');
   }

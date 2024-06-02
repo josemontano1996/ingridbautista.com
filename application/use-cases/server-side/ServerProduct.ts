@@ -1,7 +1,7 @@
 'use server';
 
 import { ProductDto, mapProductDtoToDb } from '@/application/dto/ProductDto';
-import { ServerError } from '@/application/errors/Errors';
+import { ServerErrorHandler } from '@/application/errors/Errors';
 import { CacheService } from '@/infrastructure/caching/CacheService';
 import { CACHE_PRODUCTS_TAG } from '@/infrastructure/caching/cache-tags';
 import {
@@ -47,7 +47,7 @@ export const ServerCreateProduct = async (
       await deleteImageFromCloudinary(imageUrl);
     }
 
-    const errorInstance = new ServerError(error);
+    const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
 
     throw new Error('Error creating product');
@@ -93,7 +93,7 @@ export const ServerUpdateProduct = async (
 
     return true;
   } catch (error) {
-    const errorInstance = new ServerError(error);
+    const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
     throw new Error('Error updating product');
   }
@@ -135,7 +135,7 @@ export const ServerDeleteProduct = async (
 
     return true;
   } catch (error) {
-    const errorInstance = new ServerError(error);
+    const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
     throw new Error('Error updating product');
   }

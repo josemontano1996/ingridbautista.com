@@ -5,7 +5,7 @@ import { UserRepository } from '@/infrastructure/persistence/repositories/UserRe
 import { serializeData } from '@/application/utils/serializeData';
 import { createLoginAuthUserDto } from '@/application/dto/AuthUserDto';
 import { UserDto } from '@/application/dto/UserDto';
-import { ServerError } from '@/application/errors/Errors';
+import { ServerErrorHandler } from '@/application/errors/Errors';
 
 export const serverLogInUseCase = async (
   context: { userRepository: UserRepository },
@@ -41,7 +41,7 @@ export const serverLogInUseCase = async (
 
     return user.toUserDto();
   } catch (error) {
-    const errorInstance = new ServerError(error);
+    const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
 
     return null;

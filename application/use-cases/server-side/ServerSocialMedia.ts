@@ -4,7 +4,7 @@ import {
   SocialMediaDto,
   mapDbSocialMediaToDto,
 } from '@/application/dto/SocialMediaDto';
-import { ServerError } from '@/application/errors/Errors';
+import { ServerErrorHandler } from '@/application/errors/Errors';
 
 import { CacheService } from '@/infrastructure/caching/CacheService';
 import { CACHE_SOCIAL_MEDIA_TAG } from '@/infrastructure/caching/cache-tags';
@@ -27,7 +27,7 @@ export const ServerGetSocialMedia = async (context: {
 
     return mapDbSocialMediaToDto(dbSocialMedia);
   } catch (error) {
-    const errorInstance = new ServerError(error);
+    const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
     throw new Error('Error getting social media');
   }
@@ -52,11 +52,10 @@ export const ServerUpdateSocialMedia = async (
     CacheService.revalidateCacheTag([CACHE_SOCIAL_MEDIA_TAG]);
 
     return mapDbSocialMediaToDto(result);
-
   } catch (error) {
-    const errorInstance = new ServerError(error);
+    const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
-    
+
     throw new Error('Error getting social media');
   }
 };

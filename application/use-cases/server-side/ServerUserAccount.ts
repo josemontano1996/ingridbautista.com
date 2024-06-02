@@ -1,7 +1,7 @@
 'use server';
 
 import { updatePasswordDto } from '@/application/dto/UserDto';
-import { ServerError } from '@/application/errors/Errors';
+import { ServerErrorHandler } from '@/application/errors/Errors';
 import { UserEntity } from '@/domain/entities/UserEntity';
 import { getAuthSession } from '@/infrastructure/authentication/getAuthSession';
 import { IUserRepository } from '@/infrastructure/persistence/repositories/UserRepository';
@@ -36,7 +36,7 @@ export const ServerUpdateUserPassword = async (
 
     return true;
   } catch (error) {
-    const errorInstance = new ServerError(error);
+    const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
 
     throw new Error('Error updating password');

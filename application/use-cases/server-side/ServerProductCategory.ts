@@ -1,7 +1,7 @@
 'use server';
 
 import { mapDbProductCategoryListToDto } from '@/application/dto/ProductCategoryDto';
-import { ServerError } from '@/application/errors/Errors';
+import { ServerErrorHandler } from '@/application/errors/Errors';
 import { IProductCategoryRepository } from '@/infrastructure/persistence/repositories/ProductCategoryRepository';
 
 export const ServerGetProductCategories = async (context: {
@@ -18,7 +18,7 @@ export const ServerGetProductCategories = async (context: {
 
     return mapDbProductCategoryListToDto(dbCategories);
   } catch (error) {
-    const errorInstance = new ServerError(error);
+    const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
     throw new Error('Error getting product categories');
   }
