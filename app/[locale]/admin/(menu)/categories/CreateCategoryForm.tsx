@@ -3,7 +3,6 @@
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-
 import {
   Form,
   FormControl,
@@ -14,11 +13,11 @@ import {
   FormMessage,
 } from '@/presentation/components/ui/form';
 import { Input } from '@/presentation/components/ui/input';
-import { categoryFormSchema } from '@/shared/lib/schemas/categoryFormSchema';
-import { createCategoryAction } from '@/application/actions/category-actions';
 import { FormButton } from '@/presentation/components/custom/FormButton';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
+import { productCategoryDtoSchema } from '@/application/dto/ProductCategoryDto';
+import { createCategoryAction } from '@/application/actions/category-actions';
 
 export const CreateCategoryForm = () => {
   const setErrorStatusStore = useStatusStore((state) => state.setError);
@@ -27,8 +26,8 @@ export const CreateCategoryForm = () => {
 
   const appendCategoryStore = useCategoryStore((state) => state.appendCategory);
 
-  const form = useForm<z.infer<typeof categoryFormSchema>>({
-    resolver: zodResolver(categoryFormSchema),
+  const form = useForm<z.infer<typeof productCategoryDtoSchema>>({
+    resolver: zodResolver(productCategoryDtoSchema),
     defaultValues: {
       name: '',
       order: 0,
@@ -37,7 +36,7 @@ export const CreateCategoryForm = () => {
     },
   });
 
-  async function onSubmit(data: z.infer<typeof categoryFormSchema>) {
+  async function onSubmit(data: z.infer<typeof productCategoryDtoSchema>) {
     clearStatusStore();
     setIsLoadingStatusStore(true);
 

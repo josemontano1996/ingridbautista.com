@@ -2,20 +2,18 @@
 
 import { useEffect } from 'react';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
-import { IDbCategory } from '@/infrastructure/persistence/db-types';
+import { ProductCategoryDto } from '@/application/dto/ProductCategoryDto';
 
 interface Props {
-  fetchedCategories: IDbCategory[] | null;
+  categories: ProductCategoryDto[];
 }
 
-export const CategoryStoreZustandInitializer = ({
-  fetchedCategories,
-}: Props) => {
+export const CategoryStoreZustandInitializer = ({ categories }: Props) => {
   const initializeCategories = useCategoryStore((state) => state.setCategories);
 
   useEffect(() => {
-    initializeCategories(fetchedCategories);
-  }, [initializeCategories, fetchedCategories]);
+    initializeCategories(categories);
+  }, [initializeCategories, categories]);
 
   return <></>;
 };

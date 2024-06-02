@@ -1,13 +1,10 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { Input } from '@/presentation/components/ui/input';
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import { categoryFormSchema } from '@/shared/lib/schemas/categoryFormSchema';
 import {
   DialogClose,
   DialogContent,
@@ -25,9 +22,14 @@ import { FormButton } from '@/presentation/components/custom/FormButton';
 import { updateCategoryAction } from '@/application/actions/category-actions';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
+import { productDtoSchema } from '../../../../../application/dto/ProductDto';
+import {
+  ProductCategoryDto,
+  productCategoryDtoSchema,
+} from '@/application/dto/ProductCategoryDto';
 
 interface Props {
-  category: IFecthedCategory;
+  category: ProductCategoryDto;
 }
 
 export const EditCategoryForm = ({ category }: Props) => {
@@ -39,18 +41,18 @@ export const EditCategoryForm = ({ category }: Props) => {
     (state) => state.updateCategories,
   );
 
-  const form = useForm<z.infer<typeof categoryFormSchema>>({
-    resolver: zodResolver(categoryFormSchema),
+  const form = useForm<z.infer<typeof productCategoryDtoSchema>>({
+    resolver: zodResolver(productCategoryDtoSchema),
     defaultValues: {
       name: category.name,
       order: category.order,
       en: category.en,
       fr: category.fr,
-      _id: category._id,
+      id: category.id,
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof categoryFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof productCategoryDtoSchema>) => {
     clearStatusStore();
     setIsLoadingStatusStore(true);
 
@@ -76,14 +78,14 @@ export const EditCategoryForm = ({ category }: Props) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
           <FormField
             control={form.control}
-            name="_id"
+            name="id"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
                   <Input
                     {...field}
                     className="text-xl"
-                    value={category._id}
+                    value={category.id}
                     type="hidden"
                   />
                 </FormControl>

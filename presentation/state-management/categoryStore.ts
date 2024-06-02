@@ -4,7 +4,7 @@ import { create } from 'zustand';
 
 type TCategoryStore = {
   categories: ProductCategoryDto[] | null;
-  setCategories: (cat?: ProductCategoryDto[] | null) => void;
+  setCategories: (cat?: ProductCategoryDto[]) => void;
   appendCategory: (cat: ProductCategoryDto) => void;
   updateCategories: (cat: ProductCategoryDto) => void;
   deleteCategory: (categoryName: string) => void;
@@ -12,8 +12,8 @@ type TCategoryStore = {
 
 export const useCategoryStore = create<TCategoryStore>((set) => ({
   categories: [],
-  setCategories: (cat?: ProductCategoryDto[] | null) =>
-    set((state) => ({ ...state, categories: cat })),
+  setCategories: (cat?: ProductCategoryDto[]) =>
+    set((state) => ({ ...state, categories: cat?.length ? cat : null })),
   appendCategory: (cat: ProductCategoryDto) =>
     set((state) => {
       const newCategories = state.categories

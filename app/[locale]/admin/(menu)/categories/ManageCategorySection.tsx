@@ -10,12 +10,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/presentation/components/ui/table';
-
 import useStore from '@/presentation/state-management/useStore';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { EditCategoryForm } from './EditCategoryForm';
-import { cn } from '../../../../../../shared/utils/utils';
 import { DeleteCategory } from './DeleteCategory';
+import { cn } from '@/shared/utils/utils';
 
 export const ManageCategorySection = () => {
   const categories = useStore(useCategoryStore, (state) => state.categories);
@@ -32,7 +31,7 @@ export const ManageCategorySection = () => {
       </TableHeader>
       <TableBody>
         {categories.map((cat) => (
-          <TableRow key={cat._id}>
+          <TableRow key={cat.id}>
             <TableCell>{cat.name}</TableCell>
             <TableCell>{cat.order}</TableCell>
             <TableCell>{cat.fr}</TableCell>
