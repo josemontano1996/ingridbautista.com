@@ -1,5 +1,3 @@
-'use server';
-
 import XDraggableList from '@/presentation/components/custom/XDraggableList';
 import { TLocales } from '@/shared/types/TLocales';
 import { AdminMenuItemCard } from './AdminMenuItemCard';
@@ -12,7 +10,7 @@ type Props = {
   menuInstance: ITranslatedMenuView;
 };
 
-const AdminMenu = async ({ locale, menuInstance }: Props) => {
+const AdminMenu = ({ locale, menuInstance }: Props) => {
   const translatedMenu: Record<string, ITranslatedProduct[]> =
     menuInstance.getTranslatedAndSortedMenu();
 

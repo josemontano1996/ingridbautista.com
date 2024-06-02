@@ -29,7 +29,7 @@ const AdminNavBar = async () => {
           <li className="px-2 text-xl font-medium">
             <LocaleLink
               isNextLink={false}
-              path="/admin/product/categories"
+              path="/admin/categories"
               styling="flex items-center gap-1 hover:bg-accent hover:text-accent-foreground px-2 py-1"
             >
               <ArrowDownAZ />

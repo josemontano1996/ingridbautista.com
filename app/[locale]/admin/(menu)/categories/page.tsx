@@ -5,7 +5,6 @@ import { CreateCategoryForm } from './CreateCategoryForm';
 import { ManageCategorySection } from './ManageCategorySection';
 
 const CategoryManagementPage = async () => {
-
   const categories = await ServerGetProductCategories({
     productCategoryRepository: new ProductCategoryRepository(),
   });

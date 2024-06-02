@@ -6,11 +6,12 @@ import { updatePasswordDtoSchema } from '@/application/dto/UserDto';
 import { UserRepository } from '../../infrastructure/persistence/repositories/UserRepository';
 import { ServerUpdateUserPassword } from '@/application/use-cases/server-side/ServerUserAccount';
 import { IUserActionResponse } from './IActionResponses';
+import { validateSchema } from '@/infrastructure/validation/validateSchema';
 
 export const updatePasswordUserAction = async (
   values: z.infer<typeof updatePasswordDtoSchema>,
 ): Promise<IUserActionResponse> => {
-  const parsed = updatePasswordDtoSchema.safeParse(values);
+  const parsed = validateSchema(updatePasswordDtoSchema, values);
 
   if (!parsed.success) {
     return {

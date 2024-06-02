@@ -9,12 +9,13 @@ import {
   ServerUpdateProduct,
 } from '../use-cases/server-side/ServerProduct';
 import { IProductActionResponse } from './IActionResponses';
+import { validateSchema } from '@/infrastructure/validation/validateSchema';
 
 export const createProductAction = async (
   values: z.infer<typeof productDtoSchema>,
 ): Promise<IProductActionResponse> => {
   try {
-    const parsed = productDtoSchema.safeParse(values);
+    const parsed = validateSchema(productDtoSchema, values);
 
     if (!parsed.success) {
       return {
@@ -50,7 +51,7 @@ export const updateProductAction = async (
   values: ProductDto,
 ): Promise<IProductActionResponse> => {
   try {
-    const parsed = productDtoSchema.safeParse(values);
+    const parsed = validateSchema(productDtoSchema, values);
 
     if (!parsed.success) {
       return {

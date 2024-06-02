@@ -2,6 +2,8 @@
 
 import { MenuDto, mapDbMenutoDto } from '@/application/dto/MenuDto';
 import { ServerErrorHandler } from '@/application/errors/Errors';
+import { CacheService } from '@/infrastructure/caching/CacheService';
+import { CACHE_PRODUCTS_TAG } from '@/infrastructure/caching/cache-tags';
 import { IMenuRepository } from '@/infrastructure/persistence/repositories/MenuRepository';
 
 export type IServerGetMenu = (context: {
@@ -14,7 +16,9 @@ export const ServerGetMenu: IServerGetMenu = async (context: {
   try {
     const { menuRepository } = context;
 
-    const dbMenu = await menuRepository.getMenu();
+    const dbMenu = await CacheService.cacheQuery(menuRepository.getMenu, [
+      CACHE_PRODUCTS_TAG,
+    ]);
 
     if (!dbMenu) {
       throw new Error('No menu found');

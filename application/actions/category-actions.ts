@@ -1,18 +1,21 @@
 'use server';
 import { z } from 'zod';
 
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-
-import { ICategoryActionResponse } from '@/shared/interfaces/IActionResponses';
-import { categoryFormSchema } from '@/shared/lib/schemas/categoryFormSchema';
 import { revalidatePath } from 'next/cache';
-import { connectDB } from '@/infrastructure/persistence/database-config';
-import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
+import { productCategoryDtoSchema } from '../dto/ProductCategoryDto';
+import { ICategoryActionResponse } from './IActionResponses';
+import { validateSchema } from '@/infrastructure/validation/validateSchema';
+import {
+  ServerCreateCategory,
+  ServerDeleteProductCategory,
+  ServerUpdateProductCategory,
+} from '../use-cases/server-side/ServerProductCategory';
+import { ProductCategoryRepository } from '@/infrastructure/persistence/repositories/ProductCategoryRepository';
 
 export const createCategoryAction = async (
-  values: z.infer<typeof categoryFormSchema>,
+  values: z.infer<typeof productCategoryDtoSchema>,
 ): Promise<ICategoryActionResponse> => {
-  const parsed = categoryFormSchema.safeParse(values);
+  const parsed = validateSchema(productCategoryDtoSchema, values);
 
   if (!parsed.success) {
     return {
@@ -22,30 +25,22 @@ export const createCategoryAction = async (
   }
 
   try {
-    const category: IFecthedCategory = {
-      name: parsed.data.name,
-      order: parsed.data.order,
-      en: parsed.data.en,
-      fr: parsed.data.fr,
-    };
+    const category = parsed.data;
 
-    await connectDB();
-    const newCategory = new ProductCategory(category);
-
-    const result = await newCategory.save();
+    const result = await ServerCreateCategory(
+      { productCategoryRepository: new ProductCategoryRepository() },
+      { category },
+    );
 
     if (!result) {
-      throw new Error(result);
+      throw new Error('Error creating category');
     }
 
-    revalidatePath('/[locale]/(users)/menu', 'layout');
-    revalidatePath('/[locale]/admin/(menu)', 'layout');
     return {
       success: true,
-      payload: JSON.parse(JSON.stringify(category)),
+      payload: result,
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       message: 'Error creating category, check if category already exists',
@@ -54,9 +49,9 @@ export const createCategoryAction = async (
 };
 
 export const updateCategoryAction = async (
-  values: z.infer<typeof categoryFormSchema>,
-): Promise<ICategoryActionResponse> => {
-  const parsed = categoryFormSchema.safeParse(values);
+  values: z.infer<typeof productCategoryDtoSchema>,
+) => {
+  const parsed = validateSchema(productCategoryDtoSchema, values);
 
   if (!parsed.success) {
     return {
@@ -66,28 +61,20 @@ export const updateCategoryAction = async (
   }
 
   try {
-    const { name, order, en, fr, _id }: IFecthedCategory = parsed.data;
-
-    await connectDB();
-
-    const updatedData = await ProductCategory.findOneAndUpdate(
-      { _id },
-      { name, order, en, fr },
-      { new: true },
-    ).lean();
+    const updatedData = await ServerUpdateProductCategory(
+      { productCategoryRepository: new ProductCategoryRepository() },
+      { category: parsed.data },
+    );
 
     if (!updatedData) {
       throw new Error('Error updating data on line 80. updateCategoryAction');
     }
 
-    revalidatePath('/[locale]/(users)/menu', 'layout');
-    revalidatePath('/[locale]/admin/(menu)', 'layout');
     return {
       success: true,
-      payload: JSON.parse(JSON.stringify(updatedData)),
+      payload: updatedData,
     };
   } catch (e) {
-    console.error(e);
     return {
       success: false,
       message: 'Error updating category, check if category already exists.',
@@ -105,22 +92,19 @@ export const deleteCategoryAction = async (
     };
   }
   try {
-    await connectDB();
-
-    const result = await ProductCategory.deleteOne({ name: categoryName });
+    const result = ServerDeleteProductCategory(
+      { productCategoryRepository: new ProductCategoryRepository() },
+      { categoryName },
+    );
 
     if (!result) {
       throw new Error(result);
     }
 
-    revalidatePath('/[locale]/(users)/menu', 'layout');
-    revalidatePath('/[locale]/admin/(menu)', 'layout');
-
     return {
       success: true,
     };
   } catch (error) {
-    console.error(error);
     return {
       success: false,
       message: 'Error deleting category, try again later',

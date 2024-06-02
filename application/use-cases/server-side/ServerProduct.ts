@@ -9,6 +9,7 @@ import {
   updateImageFromCloudinary,
   uploadImageToCloudinary,
 } from '@/infrastructure/online-storage/cloudinary';
+import { IDbProduct } from '@/infrastructure/persistence/db-types';
 import { IProductRepository } from '@/infrastructure/persistence/repositories/ProductRepository';
 
 export const ServerCreateProduct = async (
@@ -18,7 +19,7 @@ export const ServerCreateProduct = async (
   data: {
     product: ProductDto;
   },
-): Promise<boolean> => {
+): Promise<IDbProduct | undefined> => {
   let imageUrl = null;
 
   try {
@@ -41,7 +42,7 @@ export const ServerCreateProduct = async (
 
     CacheService.revalidateCacheTag([CACHE_PRODUCTS_TAG]);
 
-    return true;
+    return result;
   } catch (error) {
     if (imageUrl) {
       await deleteImageFromCloudinary(imageUrl);
@@ -50,8 +51,15 @@ export const ServerCreateProduct = async (
     const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();
 
-    throw new Error('Error creating product');
+    return undefined;
   }
+};
+
+export const ServerGetProduct = async () => {
+  /*    const dbCategories = await CacheService.cacheQuery(
+         productCategoryRepository.getCategories,
+         [CACHE_PRODUCT_CATEGORIES_TAG],
+       ); */
 };
 
 export const ServerUpdateProduct = async (

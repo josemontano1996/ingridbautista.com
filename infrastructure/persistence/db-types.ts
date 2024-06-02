@@ -26,7 +26,7 @@ export interface IDbProduct {
 }
 
 export interface IDbProductCategory {
-  _id: string;
+  _id?: string;
   name: string;
   order: number;
   en: string;

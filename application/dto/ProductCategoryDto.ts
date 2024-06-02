@@ -25,9 +25,25 @@ export const mapDbProductCategoryToDto = (
     fr: sD.fr,
   };
 };
+export const mapProductCategoryDtoToDb = (
+  data: ProductCategoryDto,
+): IDbProductCategory => {
+  return {
+    _id: data.id,
+    name: data.name,
+    order: data.order,
+    en: data.en,
+    fr: data.fr,
+  };
+};
 
-export const mapDbProductCategoryListToDto = (
+export const mapDbProductCategoryArrayToDto = (
   data: IDbProductCategory[],
 ): ProductCategoryDto[] => {
+  return data.map((category) => mapDbProductCategoryToDto(category));
+};
+export const mapProductCategoryArrayDtoToDb = (
+  data: ProductCategoryDto[],
+): IDbProductCategory[] => {
   return data.map((category) => mapDbProductCategoryToDto(category));
 };

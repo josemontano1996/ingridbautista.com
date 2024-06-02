@@ -9,12 +9,14 @@ import {
 import { ServerUpdateSocialMedia } from '@/application/use-cases/server-side/ServerSocialMedia';
 import { SocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialDataRespository';
 import { IActionResponse } from './IActionResponses';
+import { validateSchema } from '@/infrastructure/validation/validateSchema';
 
 export const updateSocialMediaAction = async (
   values: z.infer<typeof socialMediaDtoSchema>,
 ): Promise<IActionResponse> => {
-  const parsed = socialMediaDtoSchema.safeParse(values);
 
+  const parsed = validateSchema(socialMediaDtoSchema, values);
+  
   if (!parsed.success) {
     return {
       success: false,
