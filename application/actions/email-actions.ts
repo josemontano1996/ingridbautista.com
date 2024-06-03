@@ -4,11 +4,13 @@ import { z } from 'zod';
 import { Resend } from 'resend';
 import { contactFormSchema } from '@/shared/lib/schemas/contactFormSchema';
 import { IActionResponse } from './IActionResponses';
+import { validateSchema } from '@/infrastructure/validation/validateSchema';
 
 export const sendEmailAction = async (
   values: z.infer<typeof contactFormSchema>,
 ): Promise<IActionResponse> => {
-  const parsed = contactFormSchema.safeParse(values);
+  
+  const parsed = validateSchema(contactFormSchema, values);
 
   if (!parsed.success) {
     return {

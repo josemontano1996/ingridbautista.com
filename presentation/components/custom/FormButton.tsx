@@ -58,7 +58,7 @@ export const FormButton: FC<Props> = ({
       type={action}
       className={cn(styling)}
     >
-      {loading ? loadingText : text}
+      {form.formState.isSubmitting ? loadingText : text}
     </Button>
   );
 };

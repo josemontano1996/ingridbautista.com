@@ -20,10 +20,10 @@ export const updatePasswordUserAction = async (
     };
   }
 
-  const password = parsed.data.password;
-  const confirmPassword = parsed.data.confirmPassword;
-
   try {
+    const password = parsed.data.password;
+    const confirmPassword = parsed.data.confirmPassword;
+
     await ServerUpdateUserPassword(
       { userRepository: new UserRepository() },
       { passwords: { password, confirmPassword } },

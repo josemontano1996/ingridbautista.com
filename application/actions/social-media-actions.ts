@@ -14,9 +14,8 @@ import { validateSchema } from '@/infrastructure/validation/validateSchema';
 export const updateSocialMediaAction = async (
   values: z.infer<typeof socialMediaDtoSchema>,
 ): Promise<IActionResponse> => {
-
   const parsed = validateSchema(socialMediaDtoSchema, values);
-  
+
   if (!parsed.success) {
     return {
       success: false,
@@ -25,11 +24,10 @@ export const updateSocialMediaAction = async (
   }
 
   try {
-    let socialMedia: SocialMediaDto = { ...parsed.data };
 
     const result = await ServerUpdateSocialMedia(
       { socialMediaRepository: new SocialMediaRepository() },
-      { socialMedia },
+      { socialMedia: parsed.data },
     );
 
     if (!result) {
