@@ -83,7 +83,7 @@ export const UpdatePasswordForm: FC = (): JSX.Element => {
             </FormItem>
           )}
         />
-        <FormButton text="Submit" loadingText="Submitting..." />
+        <FormButton form={form} text="Submit" loadingText="Submitting..." />
       </form>
     </Form>
   );

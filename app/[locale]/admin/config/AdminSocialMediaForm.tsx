@@ -1,6 +1,5 @@
 'use client';
 
-import { FC } from 'react';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -31,8 +30,6 @@ export const AdminSocialMediaForm = ({ data }: Props) => {
   }
   const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
   const setErrorStatusStore = useStatusStore((state) => state.setError);
-  const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
-  const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
 
   const form = useForm<z.infer<typeof socialMediaDtoSchema>>({
     resolver: zodResolver(socialMediaDtoSchema),
@@ -44,12 +41,7 @@ export const AdminSocialMediaForm = ({ data }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof socialMediaDtoSchema>) => {
-    clearStatusStore();
-    setIsLoadingStatusStore(true);
-
     const { success, message } = await updateSocialMediaAction(values);
-
-    setIsLoadingStatusStore(false);
 
     if (!success) {
       return setErrorStatusStore(
@@ -102,7 +94,7 @@ export const AdminSocialMediaForm = ({ data }: Props) => {
             </FormItem>
           )}
         />
-        <FormButton text="Submit" loadingText="Submitting..." />
+        <FormButton form={form} text="Submit" loadingText="Submitting..." />
       </form>
     </Form>
   );

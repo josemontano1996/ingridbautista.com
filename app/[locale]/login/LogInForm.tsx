@@ -101,7 +101,7 @@ const LogInForm = ({ locale }: { locale: TLocales }) => {
         />
 
         <div className="flex flex-col items-center">
-          <FormButton text="Submit" loadingText="Submitting..." />
+          <FormButton form={form} text="Submit" loadingText="Submitting..." />
         </div>
       </form>
     </Form>

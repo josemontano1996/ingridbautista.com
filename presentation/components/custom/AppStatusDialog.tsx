@@ -33,7 +33,6 @@ const AppStatusDialog = () => {
 
   useEffect(() => {
     /*  Set the error or success state based on the query parameters. */
-
     if (errorQuery) {
       setIsError(errorQuery);
     } else if (successQuery) {
@@ -43,7 +42,6 @@ const AppStatusDialog = () => {
 
   useEffect(() => {
     /*  Trigger the success dialog if the isSuccess state is true. */
-
     isSuccess ? successDialog.current?.click() : null;
   }, [isSuccess]);
 
