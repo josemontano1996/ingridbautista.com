@@ -39,7 +39,7 @@ export const serverLogInUseCase = async (
       throw new Error('Invalid email or password');
     }
 
-    return user.toUserDto();
+    return user.toDto();
   } catch (error) {
     const errorInstance = new ServerErrorHandler(error);
     errorInstance.logError();

@@ -1,11 +1,11 @@
-import { ZodError, z } from 'zod';
+import { z } from 'zod';
 import { ProductEntity, productEntitySchema } from './ProductEntity';
 import { ProductDto } from '@/application/dto/ProductDto';
-import { ZodValidationError } from '@/application/errors/Errors';
+import { Entity } from './Entity';
 
 export interface IMenuEntity {
   getProductArray(): ProductEntity[];
-  toMenuDto(): ProductDto[];
+  toDto(): ProductDto[];
 }
 
 export class MenuEntity implements IMenuEntity {
@@ -18,17 +18,12 @@ export class MenuEntity implements IMenuEntity {
     return this.productArray;
   }
 
-  toMenuDto(): ProductDto[] {
-    return this.productArray.map((product) => product.toProductDto());
+  toDto(): ProductDto[] {
+    return this.productArray.map((product) => product.toDto());
   }
 
   private validate() {
-    try {
-      menuEntitySchema.safeParse(this);
-    } catch (e) {
-      const error = e as ZodError;
-      throw new ZodValidationError(error, 'Validation error');
-    }
+    Entity.validate(menuEntitySchema, this.productArray);
   }
 }
 

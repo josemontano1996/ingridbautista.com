@@ -6,6 +6,7 @@ import {
 } from '../../shared/types/TAllergens';
 import { ProductDto } from '@/application/dto/ProductDto';
 import { ZodValidationError } from '@/application/errors/Errors';
+import { Entity } from './Entity';
 
 export interface IProductEntity {
   getId(): string | undefined;
@@ -17,7 +18,7 @@ export interface IProductEntity {
   getEn(): ITranslationDetails;
   getEs(): ITranslationDetails;
   getFr(): ITranslationDetails;
-  toProductDto(): ProductDto;
+  toDto(): ProductDto;
 }
 
 export class ProductEntity implements IProductEntity {
@@ -79,7 +80,7 @@ export class ProductEntity implements IProductEntity {
     return this.fr;
   }
 
-  toProductDto(): ProductDto {
+  toDto(): ProductDto {
     return {
       id: this.getId(),
       image: this.getImage(),
@@ -93,12 +94,7 @@ export class ProductEntity implements IProductEntity {
     };
   }
   private validate() {
-    try {
-      productEntitySchema.safeParse(this);
-    } catch (e) {
-      const error = e as ZodError;
-      throw new ZodValidationError(error, 'Validation error');
-    }
+    Entity.validate(productEntitySchema, this);
   }
 }
 

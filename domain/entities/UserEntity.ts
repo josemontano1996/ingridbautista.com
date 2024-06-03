@@ -1,16 +1,16 @@
 import bcrypt from 'bcryptjs';
-import { ZodError, z } from 'zod';
+import { z } from 'zod';
 import { TUserRole, zodUserRoleType } from '@/shared/types/TUserRole';
 import { UserDto } from '@/application/dto/UserDto';
 import { hashStringSync } from '@/shared/utils/hashString';
-import { ZodValidationError } from '@/application/errors/Errors';
+import { Entity } from './Entity';
 
 export interface IUserEntity {
   getId(): string | undefined;
   getName(): string;
   getEmail(): string;
   getRole(): TUserRole;
-  toUserDto(): UserDto;
+  toDto(): UserDto;
   verifyPassword(hashedPassword: string): Promise<boolean>;
 }
 
@@ -69,7 +69,7 @@ export class UserEntity implements IUserEntity {
     return this.role;
   }
 
-  toUserDto(): UserDto {
+  toDto(): UserDto {
     return {
       id: this.getId()!,
       name: this.getName(),
@@ -86,11 +86,7 @@ export class UserEntity implements IUserEntity {
       password: z.string().min(8).optional(),
     });
 
-    try {
-      entitySchema.safeParse(this);
-    } catch (e) {
-      const error = e as ZodError;
-      throw new ZodValidationError(error, 'Validation error');
-    }
+    Entity.validate(entitySchema, this);
+    entitySchema.safeParse(this);
   }
 }
