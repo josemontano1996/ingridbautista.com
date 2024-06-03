@@ -1,7 +1,7 @@
 'use client';
 
 import * as z from 'zod';
-import { useParams, useRouter } from 'next/navigation';
+import {  useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,7 +25,6 @@ const LogInForm = ({ locale }: { locale: TLocales }) => {
   const router = useRouter();
 
   const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
-  const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
   const setErrorStatusStore = useStatusStore((state) => state.setError);
 
   const form = useForm<z.infer<typeof AuthUserDtoSchema>>({
@@ -37,8 +36,6 @@ const LogInForm = ({ locale }: { locale: TLocales }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof AuthUserDtoSchema>) => {
-    clearStatusStore();
-
     const { email, password } = values;
 
     if (!email || !password) {
@@ -61,7 +58,6 @@ const LogInForm = ({ locale }: { locale: TLocales }) => {
       return;
     }
 
-    clearStatusStore();
     router.push(`/${locale}/admin/menu`);
   };
 

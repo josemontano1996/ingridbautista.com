@@ -20,8 +20,6 @@ import { updatePasswordDtoSchema } from '@/application/dto/UserDto';
 export const UpdatePasswordForm: FC = (): JSX.Element => {
   const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
   const setErrorStatusStore = useStatusStore((state) => state.setError);
-  const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
-  const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
 
   const form = useForm<z.infer<typeof updatePasswordDtoSchema>>({
     resolver: zodResolver(updatePasswordDtoSchema),
@@ -32,17 +30,11 @@ export const UpdatePasswordForm: FC = (): JSX.Element => {
   });
 
   const onSubmit = async (values: z.infer<typeof updatePasswordDtoSchema>) => {
-    clearStatusStore();
-
     if (values.password !== values.confirmPassword) {
       return setErrorStatusStore('Las contraseñas deben coincidir');
     }
 
-    setIsLoadingStatusStore(true);
-
     const { success, message } = await updatePasswordUserAction(values);
-
-    setIsLoadingStatusStore(false);
 
     if (!success) {
       return setErrorStatusStore(

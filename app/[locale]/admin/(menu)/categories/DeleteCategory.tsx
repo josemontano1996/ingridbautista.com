@@ -14,8 +14,7 @@ const formSchema = z.object({});
 
 export const DeleteCategory = ({ categoryName }: { categoryName: string }) => {
   const setErrorStatusStore = useStatusStore((state) => state.setError);
-  const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
-  const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
+  const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
 
   const deleteCategoryStore = useCategoryStore((state) => state.deleteCategory);
 
@@ -24,16 +23,13 @@ export const DeleteCategory = ({ categoryName }: { categoryName: string }) => {
   });
 
   const onSubmit = async () => {
-    clearStatusStore();
-    setIsLoadingStatusStore(true);
-
     const { success, message } = await deleteCategoryAction(categoryName);
 
     if (!success) {
       setErrorStatusStore(message ? message : 'An error ocurred.');
     }
 
-    clearStatusStore();
+    setSuccessStatusStore('Category deleted successfully');
     deleteCategoryStore(categoryName);
   };
   return (
@@ -42,6 +38,7 @@ export const DeleteCategory = ({ categoryName }: { categoryName: string }) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 ">
           <div className="flex flex-col items-center">
             <FormButton
+              form={form}
               text="Borrar"
               loadingText="Borrando..."
               variant="secondary"

@@ -22,7 +22,6 @@ import { FormButton } from '@/presentation/components/custom/FormButton';
 import { updateCategoryAction } from '@/application/actions/category-actions';
 import { useCategoryStore } from '@/presentation/state-management/categoryStore';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
-import { productDtoSchema } from '../../../../../application/dto/ProductDto';
 import {
   ProductCategoryDto,
   productCategoryDtoSchema,
@@ -33,9 +32,8 @@ interface Props {
 }
 
 export const EditCategoryForm = ({ category }: Props) => {
-  const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
   const setErrorStatusStore = useStatusStore((state) => state.setError);
-  const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
+  const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
 
   const updateCategoryStore = useCategoryStore(
     (state) => state.updateCategories,
@@ -53,9 +51,6 @@ export const EditCategoryForm = ({ category }: Props) => {
   });
 
   const onSubmit = async (values: z.infer<typeof productCategoryDtoSchema>) => {
-    clearStatusStore();
-    setIsLoadingStatusStore(true);
-
     const { success, payload, message } = await updateCategoryAction(values);
 
     if (!success) {
@@ -65,7 +60,7 @@ export const EditCategoryForm = ({ category }: Props) => {
     }
 
     updateCategoryStore(payload!);
-    clearStatusStore();
+    setSuccessStatusStore('Categoria actualizada con éxito');
     closeRef.current?.click();
   };
 
@@ -157,7 +152,7 @@ export const EditCategoryForm = ({ category }: Props) => {
             )}
           />
           <div className="flex flex-col items-center">
-            <FormButton text="Editar" loadingText="Cargando..." />
+            <FormButton form={form} text="Editar" loadingText="Cargando..." />
           </div>
         </form>
       </Form>

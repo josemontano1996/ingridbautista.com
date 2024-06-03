@@ -21,8 +21,7 @@ import { createCategoryAction } from '@/application/actions/category-actions';
 
 export const CreateCategoryForm = () => {
   const setErrorStatusStore = useStatusStore((state) => state.setError);
-  const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
-  const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
+  const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
 
   const appendCategoryStore = useCategoryStore((state) => state.appendCategory);
 
@@ -37,9 +36,6 @@ export const CreateCategoryForm = () => {
   });
 
   async function onSubmit(data: z.infer<typeof productCategoryDtoSchema>) {
-    clearStatusStore();
-    setIsLoadingStatusStore(true);
-
     const { success, payload, message } = await createCategoryAction(data);
 
     if (!success) {
@@ -47,9 +43,9 @@ export const CreateCategoryForm = () => {
         message ? message : 'Ha ocurrido un error al crear la categoria.',
       );
     }
+    setSuccessStatusStore('Categoria creada con éxito');
     appendCategoryStore(payload!);
     form.reset();
-    clearStatusStore();
   }
 
   return (
@@ -120,7 +116,11 @@ export const CreateCategoryForm = () => {
           )}
         />
         <div className="flex flex-col items-center">
-          <FormButton text="Crear categoria" loadingText="Creando..." />
+          <FormButton
+            form={form}
+            text="Crear categoria"
+            loadingText="Creando..."
+          />
         </div>
       </form>
     </Form>
