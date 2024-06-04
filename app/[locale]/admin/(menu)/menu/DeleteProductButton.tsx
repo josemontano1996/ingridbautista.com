@@ -1,13 +1,12 @@
-import { useStatusStore } from '@/presentation/state-management/statusStore';
-import { deleteProductAction } from '@/application/actions/product-actions';
-import { Button, buttonVariants } from '@/presentation/components/ui/button';
+'use client';
 
-import { useRouter } from 'next/navigation';
-import { cn } from '@/shared/utils/utils';
-import { Form } from '@/presentation/components/ui/form';
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useStatusStore } from '@/presentation/state-management/statusStore';
+import { deleteProductAction } from '@/application/actions/product-actions';
+import { useRouter } from 'next/navigation';
+import { Form } from '@/presentation/components/ui/form';
 import { FormButton } from '@/presentation/components/custom/FormButton';
 
 const formSchema = z.object({});

@@ -1,43 +1,46 @@
-import { redirect } from 'next/navigation';
-
-import EditProductForm from '@/app/[locale]/admin/(menu)/product/[prodId]/EditProductForm';
+import { EditProductForm } from '@/app/[locale]/admin/(menu)/product/[prodId]/EditProductForm';
 import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
-import { connectDB } from '@/infrastructure/persistence/database-config';
-import Product from '@/infrastructure/persistence/models/Product';
-import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
+import { ServerGetProductById } from '@/application/use-cases/server-side/ServerProduct';
+import { ServerGetProductCategories } from '@/application/use-cases/server-side/ServerProductCategory';
+import { ProductCategoryRepository } from '@/infrastructure/persistence/repositories/ProductCategoryRepository';
+import { ProductRepository } from '@/infrastructure/persistence/repositories/ProductRepository';
+import { redirect } from 'next/navigation';
+import { serverRedirect } from '@/application/utils/serverRedirection';
+import { TLocales } from '@/shared/types/TLocales';
 
 interface Props {
-  params: { prodId: string };
+  params: { prodId: string; locale: TLocales };
 }
 
 export const revalidate = 0;
 
-const EditProductPage = async ({ params: { prodId } }: Props) => {
-  let categories: IFecthedCategory[] = [];
-  let product = null;
+const EditProductPage = async ({ params: { locale, prodId } }: Props) => {
+  const product = await ServerGetProductById(
+    { productRepository: new ProductRepository() },
+    { prodId },
+  );
 
-  try {
-    await connectDB();
-
-    product = await Product.findOne({ _id: prodId }).lean();
-
-    product ? (product._id = product._id!.toString()) : null;
-
-    categories = await ProductCategory.find().sort({ order: 1 }).lean();
-
-    if (categories) {
-      for (const category of categories) {
-        category._id = category._id!.toString();
-      }
-    }
-  } catch (error) {
-    console.error(error);
-  } 
+  const categories = await ServerGetProductCategories({
+    productCategoryRepository: new ProductCategoryRepository(),
+  });
 
   if (!product) {
-    //redirect throws error so it should be called outsite of trycatch
-    return redirect('/admin/menu?error=Producto no encontrado');
+    return serverRedirect({
+      url: '/admin/menu',
+      message: 'Producto no encontrado',
+      locale,
+      success: false,
+    });
+  }
+
+  if (categories.length === 0) {
+    return serverRedirect({
+      url: '/admin/menu',
+      message:
+        'No hay categorías disponibles, por favor crea una antes de agregar un producto.',
+      locale,
+      success: false,
+    });
   }
 
   return (

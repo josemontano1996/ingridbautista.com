@@ -44,9 +44,7 @@ export const FormButton: FC<Props> = ({
   useEffect(() => {
     if (form?.formState?.isSubmitting) {
       setIsLoadingStatusStore(true);
-      console.log('loading');
     } else {
-      console.log('not loading');
       setIsLoadingStatusStore(false);
     }
   }, [form.formState.isSubmitting, setIsLoadingStatusStore]);

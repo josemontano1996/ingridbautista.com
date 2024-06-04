@@ -25,28 +25,60 @@ import { Textarea } from '@/presentation/components/ui/textarea';
 import { Checkbox } from '@/presentation/components/ui/checkbox';
 
 import { allergensArray } from '@/shared/consts/allergens';
+import { updateProductAction } from '@/application/actions/product-actions';
+import { ProductDto, productDtoSchema } from '@/application/dto/ProductDto';
+import { FormButton } from '@/presentation/components/custom/FormButton';
+import { useStatusStore } from '@/presentation/state-management/statusStore';
+import { capitalize } from '@/shared/utils/capitalize';
+import { imageToBase64String } from '@/shared/utils/imageToBase64String';
+import { isFile } from '@/shared/utils/isFile';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { ProductCategoryDto } from '@/application/dto/ProductCategoryDto';
+import { zodAllergenType } from '@/shared/types/TAllergens';
 
+const editProductFormSchema = z.object({
+  id: z.string(),
+  image: z.any().optional(),
+  type: z.string(),
+  price: z.coerce
+    .number()
+    .min(0.1, { message: 'Minimo 0.1' })
+    .transform((val) => Number(val.toFixed(2))),
+  portion: z.string().optional(),
+  allergens: z.array(zodAllergenType).optional(),
+  en: z.object({
+    name: z.string(),
+    description: z.string(),
+  }),
+  es: z.object({
+    name: z.string(),
+    description: z.string(),
+  }),
+  fr: z.object({
+    name: z.string(),
+    description: z.string(),
+  }),
+});
 
-const EditProductForm = ({
+export const EditProductForm = ({
   product,
   categories,
 }: {
-  product: any;
-  categories: IFecthedCategory[];
+  product: ProductDto;
+  categories: ProductCategoryDto[];
 }) => {
   const router = useRouter();
   const { locale } = useParams();
   const { image, id, allergens, portion, type, price, es, en, fr } = product;
-  const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
+
   const setErrorStatusStore = useStatusStore((state) => state.setError);
-  const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
-  const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
 
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(
     image,
   );
-  const form = useForm<z.infer<typeof productDtoSchema>>({
-    resolver: zodResolver(productDtoSchema),
+  const form = useForm<z.infer<typeof editProductFormSchema>>({
+    resolver: zodResolver(editProductFormSchema),
     defaultValues: {
       id: id,
       image: undefined,
@@ -76,16 +108,12 @@ const EditProductForm = ({
     reader.readAsDataURL(new Blob([file]));
     reader.onloadend = () => {
       const parsedFile = reader.result;
-
       setPreviewImage(parsedFile);
     };
   };
 
-  const onSubmit = async (values: z.infer<typeof productDtoSchema>) => {
-    clearStatusStore();
-    setPreviewImage('');
-    setIsLoadingStatusStore(true);
-
+  const onSubmit = async (values: z.infer<typeof editProductFormSchema>) => {
+    //converting the image object into string if a new image is set
     if (values.image) {
       if (isFile(values.image)) {
         values.image = await imageToBase64String(values.image);
@@ -96,15 +124,17 @@ const EditProductForm = ({
       values.image = image;
     }
 
-    const { success, message } = await updateProductAction(values);
+    //at this point the values should be already a productDto because the image object has been converted to string
+    const { success, message } = await updateProductAction(
+      values as ProductDto,
+    );
 
     if (!success) {
       return setErrorStatusStore(message ? message : 'Error al crear producto');
     }
-    clearStatusStore();
-    router.push(
-      `/${locale}/admin/menu?success=Producto actualizado correctamente`,
-    );
+
+    const successMessage = encodeURI('Producto creado correctamente');
+    router.push(`/${locale}/admin/menu?success=${successMessage}`);
   };
   return (
     <Form {...form}>
@@ -162,7 +192,7 @@ const EditProductForm = ({
                   <SelectContent>
                     {categories.map((cat) => (
                       <SelectItem
-                        key={cat._id}
+                        key={cat.id}
                         value={cat.name}
                         className="text-lg"
                       >
@@ -359,7 +389,7 @@ const EditProductForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input type="hidden" value={id} {...field} />
+                    <Input type="hidden" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -367,10 +397,8 @@ const EditProductForm = ({
             />
           </div>
         </div>
-        <FormButton text="Submit" loadingText="Submitting..." />
+        <FormButton form={form} text="Submit" loadingText="Submitting..." />
       </form>
     </Form>
   );
 };
-
-export default EditProductForm;

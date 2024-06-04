@@ -1,6 +1,10 @@
 'use server';
 
-import { ProductDto, mapProductDtoToDb } from '@/application/dto/ProductDto';
+import {
+  ProductDto,
+  mapDbProductToDto,
+  mapProductDtoToDb,
+} from '@/application/dto/ProductDto';
 import { ServerErrorHandler } from '@/application/errors/Errors';
 import { CacheService } from '@/infrastructure/caching/CacheService';
 import { CACHE_PRODUCTS_TAG } from '@/infrastructure/caching/cache-tags';
@@ -55,11 +59,34 @@ export const ServerCreateProduct = async (
   }
 };
 
-export const ServerGetProduct = async () => {
-  /*    const dbCategories = await CacheService.cacheQuery(
-         productCategoryRepository.getCategories,
-         [CACHE_PRODUCT_CATEGORIES_TAG],
-       ); */
+export const ServerGetProductById = async (
+  context: {
+    productRepository: IProductRepository;
+  },
+  data: {
+    prodId: string;
+  },
+): Promise<ProductDto | undefined> => {
+  try {
+    const { productRepository } = context;
+    const { prodId } = data;
+
+    if (!prodId) {
+      throw new Error('Invalid or missing product id');
+    }
+
+    const dbProduct = await productRepository.getProductById(prodId);
+
+    if (!dbProduct) {
+      throw new Error('Product not found');
+    }
+
+    return mapDbProductToDto(dbProduct);
+  } catch (error) {
+    const errorInstance = new ServerErrorHandler(error);
+    errorInstance.logError();
+    return undefined;
+  }
 };
 
 export const ServerUpdateProduct = async (
@@ -74,7 +101,7 @@ export const ServerUpdateProduct = async (
     const { productRepository } = context;
     const { product } = data;
 
-    const oldProduct = await productRepository.getProduct(product.id!);
+    const oldProduct = await productRepository.getProductById(product.id!);
 
     if (!oldProduct) {
       throw new Error('Product not found');

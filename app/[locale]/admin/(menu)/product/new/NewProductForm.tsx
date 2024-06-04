@@ -23,25 +23,50 @@ import {
 } from '@/presentation/components/ui/select';
 import { Textarea } from '@/presentation/components/ui/textarea';
 import { Checkbox } from '@/presentation/components/ui/checkbox';
-import { createProductFormSchema } from '@/shared/lib/schemas/productFormSchemas';
 import { allergensArray } from '@/shared/consts/allergens';
 import { capitalize } from '@/shared/utils/capitalize';
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
 import { FormButton } from '@/presentation/components/custom/FormButton';
 import { createProductAction } from '@/application/actions/product-actions';
 import { imageToBase64String } from '@/shared/utils/imageToBase64String';
-
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { useParams, useRouter } from 'next/navigation';
 import { isFile } from '@/shared/utils/isFile';
+import { ProductCategoryDto } from '@/application/dto/ProductCategoryDto';
+import { zodAllergenType } from '@/shared/types/TAllergens';
+import { ProductDto } from '@/application/dto/ProductDto';
 
-const NewProductForm = ({ categories }: { categories: IFecthedCategory[] }) => {
+const createProductFormSchema = z.object({
+  image: z.any(),
+  type: z.string(),
+  price: z.coerce
+    .number()
+    .min(0.1, { message: 'Minimo 0.1' })
+    .transform((val) => Number(val.toFixed(2))),
+  portion: z.string().optional(),
+  allergens: z.array(zodAllergenType).optional(),
+  en: z.object({
+    name: z.string(),
+    description: z.string(),
+  }),
+  es: z.object({
+    name: z.string(),
+    description: z.string(),
+  }),
+  fr: z.object({
+    name: z.string(),
+    description: z.string(),
+  }),
+});
+
+const NewProductForm = ({
+  categories,
+}: {
+  categories: ProductCategoryDto[];
+}) => {
   const router = useRouter();
   const { locale } = useParams();
-  const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
+
   const setErrorStatusStore = useStatusStore((state) => state.setError);
-  const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
-  const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
 
   const [previewImage, setPreviewImage] = useState<string | ArrayBuffer | null>(
     '',
@@ -83,24 +108,23 @@ const NewProductForm = ({ categories }: { categories: IFecthedCategory[] }) => {
   };
 
   const onSubmit = async (values: z.infer<typeof createProductFormSchema>) => {
-    clearStatusStore();
-    setPreviewImage('');
-    setIsLoadingStatusStore(true);
-
+    console.log(values);
     if (isFile(values.image)) {
       values.image = await imageToBase64String(values.image);
     } else {
       return setErrorStatusStore('Formato de imagen no válido');
     }
 
-    const { success, message } = await createProductAction(values);
-    setIsLoadingStatusStore(false);
+    const { success, message } = await createProductAction(
+      values as ProductDto,
+    );
+
     if (!success) {
       return setErrorStatusStore(message ? message : 'Error al crear producto');
     }
 
-    router.push(`/${locale}/admin/menu?success=Product created succesfully`);
-    clearStatusStore();
+    const successMessage = encodeURI('Producto creado correctamente');
+    router.push(`/${locale}/admin/menu?success=${successMessage}`);
   };
   return (
     <Form {...form}>
@@ -158,7 +182,7 @@ const NewProductForm = ({ categories }: { categories: IFecthedCategory[] }) => {
                   <SelectContent>
                     {categories.map((cat) => (
                       <SelectItem
-                        key={cat._id}
+                        key={cat.id}
                         value={cat.name}
                         className="text-lg"
                       >
@@ -350,7 +374,7 @@ const NewProductForm = ({ categories }: { categories: IFecthedCategory[] }) => {
             />
           </div>
         </div>
-        <FormButton text="Submit" loadingText="Submitting..." />
+        <FormButton form={form} text="Submit" loadingText="Submitting..." />
       </form>
     </Form>
   );

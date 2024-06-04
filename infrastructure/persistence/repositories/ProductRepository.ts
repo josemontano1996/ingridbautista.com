@@ -7,7 +7,7 @@ import { ProductDto } from '@/application/dto/ProductDto';
 
 export interface IProductRepository {
   createProduct(product: IDbProduct): Promise<IDbProduct>;
-  getProduct(prodId: string): Promise<IDbProduct | null>;
+  getProductById(prodId: string): Promise<IDbProduct | null>;
   updateProduct(product: ProductDto): Promise<DbUpdateResult>;
   deleteProduct(prodId: string): Promise<DeleteResult>;
 }
@@ -18,7 +18,7 @@ export class ProductRepository implements IProductRepository {
     return Product.create(new Product(product));
   }
 
-  public async getProduct(prodId: string): Promise<IDbProduct | null> {
+  public async getProductById(prodId: string): Promise<IDbProduct | null> {
     await connectDB();
     return Product.findOne({ _id: prodId }).lean();
   }

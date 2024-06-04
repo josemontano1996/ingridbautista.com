@@ -12,7 +12,7 @@ import { IProductActionResponse } from './IActionResponses';
 import { validateSchema } from '@/infrastructure/validation/validateSchema';
 
 export const createProductAction = async (
-  values: z.infer<typeof productDtoSchema>,
+  values: ProductDto,
 ): Promise<IProductActionResponse> => {
   try {
     const parsed = validateSchema(productDtoSchema, values);
@@ -30,10 +30,7 @@ export const createProductAction = async (
     );
 
     if (!result) {
-      return {
-        success: false,
-        message: 'Error creating product',
-      };
+      throw new Error('Error creating product');
     }
 
     return {
@@ -66,10 +63,7 @@ export const updateProductAction = async (
     );
 
     if (!result) {
-      return {
-        success: false,
-        message: 'Error updating product',
-      };
+      throw new Error('Error updating product');
     }
 
     return {
@@ -94,10 +88,7 @@ export const deleteProductAction = async (
     );
 
     if (!result) {
-      return {
-        success: false,
-        message: 'Error deleting product',
-      };
+      throw new Error('Error deleting product');
     }
 
     return {

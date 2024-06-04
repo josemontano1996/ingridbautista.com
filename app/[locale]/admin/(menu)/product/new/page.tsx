@@ -1,27 +1,29 @@
 import NewProductForm from '@/app/[locale]/admin/(menu)/product/new/NewProductForm';
 import MaxWidthWrapper from '@/presentation/components/custom/wrappers/MaxWidthWrapper';
 
-import { IFecthedCategory } from '@/shared/interfaces/IFetchedCategory';
+import { ServerGetProductCategories } from '@/application/use-cases/server-side/ServerProductCategory';
+import { TLocales } from '@/shared/types/TLocales';
+import { ProductCategoryRepository } from '@/infrastructure/persistence/repositories/ProductCategoryRepository';
+import { serverRedirect } from '@/application/utils/serverRedirection';
 
-import { connectDB } from '@/infrastructure/persistence/database-config';
-import ProductCategory from '@/infrastructure/persistence/models/ProductCategory';
+const NewProductPage = async ({
+  params: { locale },
+}: {
+  params: { locale: TLocales };
+}) => {
+  const categories = await ServerGetProductCategories({
+    productCategoryRepository: new ProductCategoryRepository(),
+  });
 
-const NewProductPage = async () => {
-  let categories: IFecthedCategory[] = [];
-
-  try {
-    await connectDB();
-
-    categories = await ProductCategory.find().sort({ order: 1 }).lean();
-
-    if (categories) {
-      for (const category of categories) {
-        category._id = category._id!.toString();
-      }
-    }
-  } catch (error) {
-    console.error(error);
-  } 
+  if (!categories) {
+    return serverRedirect({
+      url: '/admin/menu',
+      message:
+        'No hay categorías disponibles, por favor crea una antes de agregar un producto.',
+      locale,
+      success: false,
+    });
+  }
 
   return (
     <MaxWidthWrapper>

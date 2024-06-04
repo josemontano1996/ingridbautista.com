@@ -7,7 +7,10 @@ export const productDtoSchema = z.object({
   id: z.string().optional(),
   image: z.string(),
   type: z.string(),
-  price: z.number().min(0),
+  price: z.coerce
+    .number()
+    .min(0.1, { message: 'Minimo 0.1' })
+    .transform((val) => Number(val.toFixed(2))),
   portion: z.string().optional(),
   allergens: z.array(zodAllergenType).optional(),
   en: z.object({
