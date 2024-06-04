@@ -29,18 +29,22 @@ import WhatsApp from '../icon-components/WhatsappComponent';
 import Facebook from '../icon-components/FacebookComponent';
 import Instagram from '../icon-components/InstagramComponent';
 import Gmail from '../icon-components/GmailComponent';
-import { ISocialData } from '@/shared/interfaces/ISocialData';
 import { useStatusStore } from '@/presentation/state-management/statusStore';
 import { sendEmailAction } from '@/application/actions/email-actions';
 import { contactFormSchema } from '@/shared/lib/schemas/contactFormSchema';
 import { Textarea } from '@/presentation/components/ui/textarea';
 import { cn } from '@/shared/utils/utils';
+import { SocialMediaDto } from '@/application/dto/SocialMediaDto';
+import { FormButton } from '../FormButton';
 
-export const ContactDialog = ({ socialData }: { socialData: ISocialData }) => {
+export const ContactDialog = ({
+  socialMedia,
+}: {
+  socialMedia: SocialMediaDto;
+}) => {
+  const { whatsapp, facebook, instagram } = socialMedia;
   const setSuccessStatusStore = useStatusStore((state) => state.setSuccess);
   const setErrorStatusStore = useStatusStore((state) => state.setError);
-  const clearStatusStore = useStatusStore((state) => state.clearStatusStore);
-  const setIsLoadingStatusStore = useStatusStore((state) => state.setIsLoading);
 
   const form = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema),
@@ -53,20 +57,15 @@ export const ContactDialog = ({ socialData }: { socialData: ISocialData }) => {
   });
 
   async function onSubmit(values: z.infer<typeof contactFormSchema>) {
-    clearStatusStore();
-    setIsLoadingStatusStore(true);
-
     const { success, message } = await sendEmailAction(values);
-
-    setIsLoadingStatusStore(false);
 
     if (!success) {
       return setErrorStatusStore(
-        message ? message : 'Error al actualizar datos',
+        message ? message : 'An error occurred while sending the email',
       );
     }
 
-    setSuccessStatusStore('Datos actualizados correctamente');
+    setSuccessStatusStore('Email sent successfully');
   }
   return (
     <Dialog>
@@ -82,11 +81,11 @@ export const ContactDialog = ({ socialData }: { socialData: ISocialData }) => {
         <DialogDescription asChild>
           <div>
             <ul className="flex justify-center gap-6 [&>li>a]:h-full [&>li>a]:w-full [&>li]:h-[24px] [&>li]:w-[24px]">
-              {socialData.whatsapp && (
+              {whatsapp && (
                 <li>
                   <a
                     target="_blank"
-                    href={`https://wa.me/${socialData.whatsapp}`}
+                    href={`https://wa.me/${whatsapp}`}
                   >
                     <WhatsApp height={24} width={24} />
                   </a>
@@ -100,16 +99,16 @@ export const ContactDialog = ({ socialData }: { socialData: ISocialData }) => {
                   <Gmail height={24} width={24} />
                 </a>
               </li>
-              {socialData.facebook && (
+              {facebook && (
                 <li>
-                  <a target="_blank" href={socialData.facebook}>
+                  <a target="_blank" href={facebook}>
                     <Facebook height={24} width={24} />
                   </a>
                 </li>
               )}
-              {socialData.instagram && (
+              {instagram && (
                 <li>
-                  <a target="_blank" href={socialData.instagram}>
+                  <a target="_blank" href={instagram}>
                     <Instagram height={24} width={24} />
                   </a>
                 </li>
@@ -181,7 +180,7 @@ export const ContactDialog = ({ socialData }: { socialData: ISocialData }) => {
                 )}
               />
               <div className="flex justify-between">
-                <Button type="submit">Send</Button>
+                <FormButton form={form} text="Send" loadingText="Sending..." />
                 <DialogClose
                   className={cn(buttonVariants({ variant: 'ghost' }))}
                 >

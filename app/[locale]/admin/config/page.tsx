@@ -1,7 +1,7 @@
 import { AdminAccountData } from '@/app/[locale]/admin/config/AdminAccountData';
 import { AdminSocialMediaForm } from './AdminSocialMediaForm';
 import { ServerGetSocialMedia } from '@/application/use-cases/server-side/ServerSocialMedia';
-import { SocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialDataRespository';
+import { SocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialMediaRespository';
 
 const ConfigPage = async ({
   params: { locale },

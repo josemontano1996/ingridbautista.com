@@ -8,7 +8,7 @@ import { ServerErrorHandler } from '@/application/errors/Errors';
 
 import { CacheService } from '@/infrastructure/caching/CacheService';
 import { CACHE_SOCIAL_MEDIA_TAG } from '@/infrastructure/caching/cache-tags';
-import { ISocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialDataRespository';
+import { ISocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialMediaRespository';
 
 export const ServerGetSocialMedia = async (context: {
   socialMediaRepository: ISocialMediaRepository;

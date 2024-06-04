@@ -5,21 +5,21 @@ import { Resend } from 'resend';
 import { contactFormSchema } from '@/shared/lib/schemas/contactFormSchema';
 import { IActionResponse } from './IActionResponses';
 import { validateSchema } from '@/infrastructure/validation/validateSchema';
+import { ServerErrorHandler } from '../errors/Errors';
 
 export const sendEmailAction = async (
   values: z.infer<typeof contactFormSchema>,
 ): Promise<IActionResponse> => {
-  
-  const parsed = validateSchema(contactFormSchema, values);
-
-  if (!parsed.success) {
-    return {
-      success: false,
-      message: 'invalid-data',
-    };
-  }
-
   try {
+    const parsed = validateSchema(contactFormSchema, values);
+
+    if (!parsed.success) {
+      return {
+        success: false,
+        message: 'invalid-data',
+      };
+    }
+
     const resend = new Resend(process.env.RESEND_API_KEY);
     const emailBody = `
     <h5>Nuevo mensaje de:</h5>
@@ -46,7 +46,8 @@ export const sendEmailAction = async (
       success: true,
     };
   } catch (error) {
-    console.error(error);
+    const serverHandlerInstance = new ServerErrorHandler(error);
+    serverHandlerInstance.logError();
 
     return {
       success: false,

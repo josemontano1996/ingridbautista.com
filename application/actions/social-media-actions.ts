@@ -7,7 +7,7 @@ import {
   socialMediaDtoSchema,
 } from '@/application/dto/SocialMediaDto';
 import { ServerUpdateSocialMedia } from '@/application/use-cases/server-side/ServerSocialMedia';
-import { SocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialDataRespository';
+import { SocialMediaRepository } from '@/infrastructure/persistence/repositories/SocialMediaRespository';
 import { IActionResponse } from './IActionResponses';
 import { validateSchema } from '@/infrastructure/validation/validateSchema';
 
@@ -24,7 +24,6 @@ export const updateSocialMediaAction = async (
   }
 
   try {
-
     const result = await ServerUpdateSocialMedia(
       { socialMediaRepository: new SocialMediaRepository() },
       { socialMedia: parsed.data },
