@@ -19,7 +19,7 @@ export const FooterMenuCard = ({
 }) => {
   return (
     <CardFooter className={cn('flex justify-between p-0 py-2')}>
-      <MenuItemInfoDialog item={item} />
+      <MenuItemInfoDialog locale={locale} item={item} />
 
       <LocaleLink
         styling={cn(buttonVariants({ variant: 'secondary' }), 'text-xl')}
