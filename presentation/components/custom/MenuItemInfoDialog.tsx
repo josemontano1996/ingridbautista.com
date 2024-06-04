@@ -15,8 +15,15 @@ import { buttonVariants } from '@/presentation/components/ui/button';
 import CardImage from './CardImage';
 import { cn } from '@/shared/utils/utils';
 import { ITranslatedProduct } from '@/shared/interfaces/ITranslatedMenu';
+import { TLocales } from '@/shared/types/TLocales';
 
-export const MenuItemInfoDialog = ({ item }: { item: ITranslatedProduct }) => {
+export const MenuItemInfoDialog = ({
+  item,
+  locale,
+}: {
+  locale: TLocales;
+  item: ITranslatedProduct;
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -25,8 +32,8 @@ export const MenuItemInfoDialog = ({ item }: { item: ITranslatedProduct }) => {
         {capitalize(t('info'))}
       </DialogTrigger>
 
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="py-6">
+      <DialogContent>
+        <DialogHeader className={cn('py-6')}>
           <CardImage name={item.name} image={item.image} />
           <DialogTitle className={cn('text-3xl')}>
             {capitalize(item.name)}

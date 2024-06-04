@@ -1,7 +1,5 @@
-
 import { TLocales } from '@/shared/types/TLocales';
 
-import { IMenuItem } from '@/shared/interfaces/IMenuItem';
 import {
   Card,
   CardHeader,
@@ -16,14 +14,14 @@ import CardImage from '@/presentation/components/custom/CardImage';
 import { MenuItemInfoDialog } from '@/presentation/components/custom/MenuItemInfoDialog';
 import initTranslations from '@/infrastructure/i18n/i18n';
 import { cn } from '@/shared/utils/utils';
+import { ITranslatedProduct } from '@/shared/interfaces/ITranslatedMenu';
 
-export const MenuItemCard = async ({
-  locale,
-  item,
-}: {
+type Props = {
   locale: TLocales;
-  item: IMenuItem;
-}) => {
+  item: ITranslatedProduct;
+};
+
+export const MenuItemCard = async ({ locale, item }: Props) => {
   const { t } = await initTranslations(locale, ['menu-page']);
 
   return (
